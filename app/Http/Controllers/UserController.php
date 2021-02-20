@@ -20,7 +20,54 @@ class UserController extends Controller
             'roles'=>Role::all(),
         ]);
     }
+    public function userIndex(){
 
+        $users = User::all();
+        return view('users.index',[
+            'users'=>$users,
+            'roles'=>Role::all(),
+        ]);
+    }
+
+    public function userCreate(){
+        return view('users.create');
+    }
+
+    public function userStore(){
+
+        request()->validate([
+            'username'=> ['required', 'string', 'max:20', 'alpha_dash', 'unique:users'],
+            'firstname'=> ['required', 'string', 'max:255'],
+            'lastname'=> ['required', 'string', 'max:255'],
+            'email'=> ['required', 'email', 'max:255', 'unique:users'],
+            'gender'=> ['required', 'notIn:0'],
+            'password'=> ['confirmed'],
+            'address'=> ['required', 'string', 'max:255'],
+            'role1'=> ['required','in:1,2,3'],
+            'role2'=> ['sometimes'],
+            'role3'=> ['sometimes'],
+        ]);
+        $user = User::create([
+            'username'=>request('username'),
+            'firstname'=>Str::ucfirst(request('firstname')),
+            'lastname'=>Str::ucfirst(request('lastname')),
+            'email'=>request('email'),
+            'gender'=>request('gender'),
+            'password'=>Hash::make(request('password')),
+            'address'=>Str::ucfirst(request('address')),
+
+        ]);
+        $user->roles()->attach(request('role1'));
+
+        if(request('role2')!=0) {
+            $user->roles()->attach(request('role2'));
+        }
+        if(request('role3')!=0) {
+            $user->roles()->attach(request('role3'));
+        }
+        Session::flash('created_user', 'The User was Successfully Created');
+        return back();
+    }
     public function tellerIndex(){
 
         $users = User::whereHas('roles', function($q){
@@ -39,11 +86,11 @@ class UserController extends Controller
     public function tellerStore(){
 
         request()->validate([
-            'username'=> ['required', 'string', 'max:20', 'alpha_dash'],
+            'username'=> ['required', 'string', 'max:20', 'alpha_dash', 'unique:users'],
             'firstname'=> ['required', 'string', 'max:255'],
             'lastname'=> ['required', 'string', 'max:255'],
-            'email'=> ['required', 'email', 'max:255'],
-            'gender'=> ['required'],
+            'email'=> ['required', 'email', 'max:255', 'unique:users'],
+            'gender'=> ['required', 'notIn:0'],
             'password'=> ['confirmed'],
             'address'=> ['required', 'string', 'max:255'],
         ]);
@@ -69,11 +116,11 @@ class UserController extends Controller
     public function customerStore(){
 
         request()->validate([
-            'username'=> ['required', 'string', 'max:20', 'alpha_dash'],
+            'username'=> ['required', 'string', 'max:20', 'alpha_dash', 'unique:users'],
             'firstname'=> ['required', 'string', 'max:255'],
             'lastname'=> ['required', 'string', 'max:255'],
-            'email'=> ['required', 'email', 'max:255'],
-            'gender'=> ['required'],
+            'email'=> ['required', 'email', 'max:255', 'unique:users'],
+            'gender'=> ['required', 'notIn:0'],
             'password'=> ['confirmed'],
             'address'=> ['required', 'string', 'max:255'],
         ]);
@@ -110,7 +157,7 @@ class UserController extends Controller
             'firstname'=> ['required', 'string', 'max:255'],
             'lastname'=> ['required', 'string', 'max:255'],
             'email'=> ['required', 'email', 'max:255'],
-            'gender'=> ['required'],
+            'gender'=> ['required', 'notIn:0'],
 //            'password'=> ['confirmed'],
             'address'=> ['required', 'string', 'max:255'],
         ]);

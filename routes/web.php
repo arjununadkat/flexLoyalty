@@ -48,6 +48,10 @@ Route::middleware('auth')->group(function (){
     Route::get('/customers', [UserController::class, 'customerIndex'])->name('customers.index');
     Route::get('/customer',[UserController::class, 'customerCreate'])->name('customers.create');
     Route::post('/customer',[UserController::class, 'customerStore'])->name('customers.store');
+
+    Route::get('/users', [UserController::class, 'userIndex'])->name('users.index');
+    Route::get('/user',[UserController::class, 'userCreate'])->name('users.create');
+    Route::post('/user',[UserController::class, 'userStore'])->name('users.store');
 });
 
 

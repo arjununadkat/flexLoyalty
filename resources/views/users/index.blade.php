@@ -1,30 +1,30 @@
 <x-main-master>
     @section('page_title')
-        Tellers
+        Users
     @endsection
 
     @section('content-heading')
-        Tellers
+        Users
     @endsection
 
     @section('content')
-            <div class="card border-light shadow-sm">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-centered table-hover table-nowrap mb-0 rounded">
-                            <thead class="thead-light">
-                            <tr>
-                                <th class="border-0">ID</th>
-                                <th class="border-0">First Name</th>
-                                <th class="border-0">Last Name</th>
-                                <th class="border-0">Spending Amount</th>
-                                <th class="border-0">Points</th>
-                                <th class="border-0">Gift Value</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Item -->
-                            @foreach($users as $user)
+        <div class="card border-light shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-centered table-hover table-nowrap mb-0 rounded">
+                        <thead class="thead-light">
+                        <tr>
+                            <th class="border-0">ID</th>
+                            <th class="border-0">First Name</th>
+                            <th class="border-0">Last Name</th>
+                            <th class="border-0">Spending Amount</th>
+                            <th class="border-0">Points</th>
+                            <th class="border-0">Gift Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Item -->
+                        @foreach($users as $user)
                             <tr onclick="window.location='{{route('user.profile.show', $user->id)}}';">
                                 <td class="border-0 fw-bold">{{$user->id}}</td>
                                 <td class="border-0">
@@ -41,18 +41,18 @@
                                 <td class="border-0 fw-bold">{{$user->points}}</td>
                                 <td class="border-0 fw-bold">{{$user->gift_value}}</td>
                             </tr>
-                            @endforeach
-                            <!-- End of Item -->
-                            </tbody>
-                        </table>
-                    </div>
+                        @endforeach
+                        <!-- End of Item -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
     @endsection
 
     @section('scripts')
-            <script>
+        <script>
 
-            </script>
+        </script>
     @endsection
 </x-main-master>

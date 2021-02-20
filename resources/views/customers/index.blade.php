@@ -11,7 +11,7 @@
         <div class="card border-light shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-centered table-nowrap mb-0 rounded">
+                    <table class="table table-hover table-centered table-nowrap mb-0 rounded">
                         <thead class="thead-light">
                         <tr>
                             <th class="border-0">ID</th>
@@ -25,15 +25,15 @@
                         <tbody>
                         <!-- Item -->
                         @foreach($users as $user)
-                            <tr>
+                            <tr onclick="window.location='{{route('user.profile.show', $user->id)}}';">
                                 <td class="border-0 fw-bold">{{$user->id}}</td>
                                 <td class="border-0">
-                                    <a href="#" class="d-flex align-items-center">
+                                    <a href="{{route('user.profile.show', $user->id)}}" class="d-flex align-items-center">
                                         <div><span class="h6">{{$user->firstname}}</span></div>
                                     </a>
                                 </td>
                                 <td class="border-0">
-                                    <a href="#" class="d-flex align-items-center">
+                                    <a href="{{route('user.profile.show', $user->id)}}" class="d-flex align-items-center">
                                         <div><span class="h6">{{$user->lastname}}</span></div>
                                     </a>
                                 </td>

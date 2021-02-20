@@ -1,16 +1,16 @@
 <x-main-master>
     @section('page_title')
-        Customers
+        User
     @endsection
 
     @section('content-heading')
-        Create new Customer
+        Create new User
     @endsection
 
     @section('content')
 
         <div class="col-sm-6">
-            <form method="post" name="userForm" action="{{route('customers.store')}}">
+            <form method="post" name="userForm" action="{{route('users.store')}}">
                 @csrf
                 <div class="row">
                     <div class="col-sm-4">
@@ -117,16 +117,63 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="mb-3">
+                    <label for="role1">Role</label>
+                    <select class="form-select @error('role1') is-invalid @enderror" id="role1" name="role1" aria-label="Default select example">
+                        <option value="0" selected>Please select one</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Teller</option>
+                        <option value="3">Customer</option>
+                    </select>
+                    <small id="role1Help" class="form-text text-muted">Please select their role</small>
+                    @error('role1')
+                    <div class="alert alert-danger">{{ 'Please make sure to select at least one role' }}</div>
+                    @enderror
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" name="role2checkbox" type="checkbox" id="role2checkbox" onclick="myFunction()">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Add a second role</label>
+                </div>
+                <div style="display:none" id="role2div" class="mb-3">
+                    <label for="role2">Second Role</label>
+                    <select class="form-select @error('role2') is-invalid @enderror" id="role2" name="role2" aria-label="Default select example">
+                        <option value="0" selected>Please select one</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Teller</option>
+                        <option value="3">Customer</option>
+                    </select>
+                    <small id="role2Help" class="form-text text-muted">This is optional</small>
+                    @error('role2')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div style="display:none" id="role3checboxdiv" class="form-check form-switch">
+                    <input  class="form-check-input" name="role3checkbox" type="checkbox" id="role3checkbox" onclick="myFunction()">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Add a third role</label>
+                </div>
+                <div style="display:none" id="role3div" class="mb-3">
+                    <label for="role3">Third Role</label>
+                    <select class="form-select @error('role3') is-invalid @enderror" id="role3" name="role3" aria-label="Default select example">
+                        <option value="0" selected>Please select one</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Teller</option>
+                        <option value="3">Customer</option>
+                    </select>
+                    <small id="role3Help" class="form-text text-muted">This is optional</small>
+                    @error('role3')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                </div>
                 <button class="btn btn-primary">Create</button>
             </form>
         </div>
         <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
         <x-modal.Amodal-master>
             @section('header')
-                Customer has been created
+                User has been created
             @endsection
             @section('paragraph')
-                Well Done! You have successfully created a Customer!
+                Well Done! You have successfully created a User!
             @endsection
             @section('route')
                 onclick="location.href='{{ route('dashboard.index') }}'"
@@ -136,10 +183,32 @@
 
     @section('scripts')
         <script>
-            @if(\Illuminate\Support\Facades\Session::has('created_customer'))
+            @if(\Illuminate\Support\Facades\Session::has('created_user'))
             document.getElementById('showmd').click();
             @endif
         </script>
-
-    @endsection
+            <script>
+                function myFunction() {
+                    var role2checkbox = document.getElementById('role2checkbox');
+                    var role2div = document.getElementById('role2div');
+                    var role3checkbox = document.getElementById('role3checkbox');
+                    var role3div = document.getElementById('role3div');
+                    var role3checboxdiv = document.getElementById('role3checboxdiv');
+                    if (role2checkbox.checked == true){
+                        role2div.style.display = "block"
+                        role3checboxdiv.style.display = "block";
+                    }
+                    else{
+                        role2div.style.display = "none";
+                        role3checboxdiv.style.display = "none";
+                    }
+                    if (role3checkbox.checked == true){
+                        role3div.style.display = "block";
+                    }
+                    else{
+                        role3div.style.display = "none";
+                    }
+                }
+            </script>
+        @endsection
 </x-main-master>
