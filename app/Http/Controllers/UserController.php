@@ -203,4 +203,11 @@ class UserController extends Controller
         $user->roles()->detach(request('role'));
         return back();
     }
+
+    public function destroy(User $user){
+
+        $user->delete();
+        session()->flash('user_deleted', 'The user has been deleted');
+        return back();
+    }
 }

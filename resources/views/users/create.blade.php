@@ -168,7 +168,7 @@
             </form>
         </div>
         <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
-        <x-modal.Amodal-master>
+            <x-modal.Amodal-master>
             @section('header')
                 User has been created
             @endsection

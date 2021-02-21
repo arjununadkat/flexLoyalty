@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function (){
     Route::put('/user/{user}/update', [UserController::class, 'update'])->name('user.profile.update');
     Route::put('/users/{user}/attach',[UserController::class, 'attach'])->name('user.role.attach');
     Route::put('/users/{user}/detach',[UserController::class, 'detach'])->name('user.role.detach');
+    Route::delete('/users/{user}/destroy',[UserController::class, 'destroy'])->name('user.destroy');
 
     Route::get('/tellers', [UserController::class, 'tellerIndex'])->name('tellers.index');
     Route::get('/teller',[UserController::class, 'tellerCreate'])->name('tellers.create');
@@ -52,6 +53,7 @@ Route::middleware('auth')->group(function (){
     Route::get('/users', [UserController::class, 'userIndex'])->name('users.index');
     Route::get('/user',[UserController::class, 'userCreate'])->name('users.create');
     Route::post('/user',[UserController::class, 'userStore'])->name('users.store');
+
 });
 
 
