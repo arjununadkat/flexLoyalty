@@ -3,7 +3,7 @@
         <div class="modal-content bg-gradient-secondary">
             <div class="modal-header">
                 <p class="modal-title" id="modal-title-notification">@yield('header')</p>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
@@ -15,13 +15,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{route('user.destroy', 'user_id')}}" enctype="multipart/form-data">
+                <form method="post" action="{{route('user.destroy', 'id')}}" enctype="multipart/form-data">
                     @csrf
                     @method('DELETE')
-                    <input type=hidden id="user_id" name="user_id" value="">
+                    <input type=hidden id="user_id" name="user_id">
                     <button type="submit" class="btn btn-secondary">Yes</button>
                 </form>
-                <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-link text-gray ms-auto" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>

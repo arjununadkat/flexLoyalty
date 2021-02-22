@@ -11,7 +11,8 @@
     Dashboard
 @endsection
 @section('content')
-
 @endsection
+
+
 
 </x-main-master>

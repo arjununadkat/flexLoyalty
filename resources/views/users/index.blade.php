@@ -50,8 +50,11 @@
                                         @method('DELETE')
 
                                         <button type="submit" class="btn btn-secondary">Delete</button>
+                                        <button type="button" id="deletebutton" class="btn btn-danger delete"
+                                                data-toggle="modal"
+                                                data-user_id='{{$user->id}}'
+                                                data-target="#deletemodal">Delete</button>
                                     </form>
-{{--                                    <button type="button" id="deletebutton" onclick="mydeleteFunction()" class="btn btn-danger delete" data-bs-toggle="modal" data-user_id='{{$user->id}}'data-bs-target="#deletemodal">Delete</button>--}}
                                 </td>
                             </tr>
                         @endforeach
@@ -60,7 +63,9 @@
                     </table>
                 </div>
             </div>
-        </div>
+
+
+            </div>
             <x-modal.Dmodal-master>
                 @section('header')
                     You are about to delete a user
@@ -72,16 +77,19 @@
             </x-modal.Dmodal-master>
     @endsection
 
-    @section('scripts')
+        @section('scripts')
             <script>
 
-                $('#deletemodal').on('show-bs-modal', function (event){
+                $('#deletemodal').on('show.bs.modal', function (event){
                     var button = $(event.relatedTarget);
                     var user_id = button.data('user_id');
                     var modal = $(this);
-                    modal.find('.modal-footer #user_id').value(user_id);
+                    modal.find('.modal-footer #user_id').val(user_id);
+                    console.log(user_id)
 
                 })
+
+
                 // $(document).on('click','.delete',function(){
                 //     let user_id = $(this).attr('data-user_id');
                 //     $('#user_id').val(user_id);
@@ -94,5 +102,5 @@
                 //         $('#user_id').val(userid);
                 // }
             </script>
-    @endsection
+        @endsection
 </x-main-master>

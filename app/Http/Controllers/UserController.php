@@ -204,10 +204,18 @@ class UserController extends Controller
         return back();
     }
 
-    public function destroy(User $user){
+    public function destroy(Request $request){
 
-        $user->delete();
-        session()->flash('user_deleted', 'The user has been deleted');
-        return back();
+        //dd($request->all());
+        //$user->delete();
+        try {
+            User::destroy($request->user_id);
+            session()->flash('user_deleted', 'The user has been deleted');
+            return back();
+        }catch (\Exception $exception){
+            session()->flash('user_deleted', 'error');
+            return back();
+        }
+
     }
 }
