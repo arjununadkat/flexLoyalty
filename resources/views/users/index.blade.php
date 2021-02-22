@@ -8,7 +8,6 @@
     @endsection
 
     @section('content')
-            <button id="delete" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">delete</button>
             <div class="card border-light shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
@@ -18,6 +17,7 @@
                             <th class="border-0">ID</th>
                             <th class="border-0">First Name</th>
                             <th class="border-0">Last Name</th>
+                            <th class="border-0">Number Of Transactions</th>
                             <th class="border-0">Spending Amount</th>
                             <th class="border-0">Points</th>
                             <th class="border-0">Gift Value</th>
@@ -40,11 +40,18 @@
                                         <div><span class="h6">{{$user->lastname}}</span></div>
                                     </a>
                                 </td>
+                                <td class="border-0 fw-bold">{{$user->transactions_number}}</td>
                                 <td class="border-0 fw-bold">{{$user->spending_amount}}</td>
                                 <td class="border-0 fw-bold">{{$user->points}}</td>
                                 <td class="border-0 fw-bold">{{$user->gift_value}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-danger delete" data-bs-toggle="modal" data-user_id='{{$user->id}}'data-bs-target="#deletemodal">Delete</button>
+                                    <form method="post" action="{{route('user.destroy', $user->id)}}" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="btn btn-secondary">Delete</button>
+                                    </form>
+{{--                                    <button type="button" id="deletebutton" onclick="mydeleteFunction()" class="btn btn-danger delete" data-bs-toggle="modal" data-user_id='{{$user->id}}'data-bs-target="#deletemodal">Delete</button>--}}
                                 </td>
                             </tr>
                         @endforeach
@@ -72,9 +79,20 @@
                     var button = $(event.relatedTarget);
                     var user_id = button.data('user_id');
                     var modal = $(this);
-                    modal.find('.modal #user_id').value(user_id);
+                    modal.find('.modal-footer #user_id').value(user_id);
 
                 })
+                // $(document).on('click','.delete',function(){
+                //     let user_id = $(this).attr('data-user_id');
+                //     $('#user_id').val(user_id);
+                // });
+
+                // function mydeleteFunction(){
+                //     var button = document.getElementById('deletebutton')
+                //     var userid = $(this).button.data('userid');
+                //     // let user_id = $(this).attr('data-user_id');
+                //         $('#user_id').val(userid);
+                // }
             </script>
     @endsection
 </x-main-master>

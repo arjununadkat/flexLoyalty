@@ -19,6 +19,15 @@ class CreateRolesTable extends Migration
             $table->string('slug')->unique();
             $table->timestamps();
         });
+
+        $data = [
+            ['name'=>'Admin', 'slug'=> 'admin'],
+            ['name'=>'Teller', 'slug'=> 'teller'],
+            ['name'=>'Customer', 'slug'=> 'customer'],
+
+        ];
+
+        DB::table('roles')->insert($data);
     }
 
     /**

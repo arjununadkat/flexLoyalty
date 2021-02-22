@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProjectController;
@@ -53,6 +54,12 @@ Route::middleware('auth')->group(function (){
     Route::get('/users', [UserController::class, 'userIndex'])->name('users.index');
     Route::get('/user',[UserController::class, 'userCreate'])->name('users.create');
     Route::post('/user',[UserController::class, 'userStore'])->name('users.store');
+
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transaction',[TransactionController::class, 'create'])->name('transactions.create');
+    Route::post('/transaction',[TransactionController::class, 'store'])->name('transactions.store');
+
+
 
 });
 

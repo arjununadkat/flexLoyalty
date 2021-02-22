@@ -15,7 +15,8 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('currency_id')->constrained('currencies');
+            $table->bigInteger('currency_id')->unsigned();
+            $table->foreign('currency_id')->references('id')->on('currencies');
             $table->integer('minimum_spending');
             $table->integer('gift_value');
             $table->integer('gift_value_points');

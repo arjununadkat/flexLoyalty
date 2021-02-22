@@ -71,7 +71,7 @@ class UserController extends Controller
     public function tellerIndex(){
 
         $users = User::whereHas('roles', function($q){
-            $q->where('name', 'Teller');
+            $q->where('id', '2');
         })->get();
         return view('tellers.index',[
             'users'=>$users,
@@ -143,7 +143,7 @@ class UserController extends Controller
     public function customerIndex(){
 
         $users = User::whereHas('roles', function($q){
-            $q->where('name', 'Costumer');
+            $q->where('id', '3');
         })->get();
         return view('customers.index',[
             'users'=>$users,

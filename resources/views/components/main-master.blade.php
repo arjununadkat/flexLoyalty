@@ -49,7 +49,7 @@
     <!-- Volt CSS -->
     <link type="text/css" href="{{asset('css/volt.css')}}" rel="stylesheet">
 
-{{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 

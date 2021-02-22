@@ -53,4 +53,9 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function transactions(){
+
+        return $this->hasMany(Transaction::class);
+    }
 }
