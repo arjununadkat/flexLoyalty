@@ -45,16 +45,10 @@
                                 <td class="border-0 fw-bold">{{$user->points}}</td>
                                 <td class="border-0 fw-bold">{{$user->gift_value}}</td>
                                 <td>
-                                    <form method="post" action="{{route('user.destroy', $user->id)}}" enctype="multipart/form-data">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit" class="btn btn-secondary">Delete</button>
                                         <button type="button" id="deletebutton" class="btn btn-danger delete"
                                                 data-toggle="modal"
                                                 data-user_id='{{$user->id}}'
                                                 data-target="#deletemodal">Delete</button>
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -73,6 +67,12 @@
                 @section('paragraph')
                     Are you sure you want to delete this user?
                 @endsection
+                @section('action')
+                        action="{{route('user.destroy', 'user')}}"
+                @endsection
+                @section('input')
+                        <input type=hidden id="user_id" name="user_id">
+                @endsection
 
             </x-modal.Dmodal-master>
     @endsection
@@ -85,22 +85,11 @@
                     var user_id = button.data('user_id');
                     var modal = $(this);
                     modal.find('.modal-footer #user_id').val(user_id);
-                    console.log(user_id)
+
 
                 })
 
 
-                // $(document).on('click','.delete',function(){
-                //     let user_id = $(this).attr('data-user_id');
-                //     $('#user_id').val(user_id);
-                // });
-
-                // function mydeleteFunction(){
-                //     var button = document.getElementById('deletebutton')
-                //     var userid = $(this).button.data('userid');
-                //     // let user_id = $(this).attr('data-user_id');
-                //         $('#user_id').val(userid);
-                // }
             </script>
         @endsection
 </x-main-master>

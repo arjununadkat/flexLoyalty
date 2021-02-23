@@ -15,10 +15,10 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{route('user.destroy', 'id')}}" enctype="multipart/form-data">
+                <form method="post" @yield('action') enctype="multipart/form-data">
                     @csrf
                     @method('DELETE')
-                    <input type=hidden id="user_id" name="user_id">
+                    @yield('input')
                     <button type="submit" class="btn btn-secondary">Yes</button>
                 </form>
                 <button type="button" class="btn btn-link text-gray ms-auto" data-dismiss="modal">No</button>

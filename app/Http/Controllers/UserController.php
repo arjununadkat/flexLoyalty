@@ -212,7 +212,7 @@ class UserController extends Controller
             User::destroy($request->user_id);
             session()->flash('user_deleted', 'The user has been deleted');
             return back();
-        }catch (\Exception $exception){
+        }catch (Exception $exception){
             session()->flash('user_deleted', 'error');
             return back();
         }
