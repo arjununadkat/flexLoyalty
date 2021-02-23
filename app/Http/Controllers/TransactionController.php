@@ -33,7 +33,7 @@ class TransactionController extends Controller
         request()->validate([
             'customer'=> ['required'],
             'firstname'=> ['required'],
-            'mode_of_payment'=> ['required'],
+            'mode_of_payment'=> ['required', 'notIn:0'],
             'spending_amount'=> ['required'],
             'points'=> ['required'],
             'gift_value'=> ['required'],
@@ -72,28 +72,70 @@ class TransactionController extends Controller
 
     public function destroy(Request $request){
 
-        //dd($request->all());
-        //$user->delete();
         Transaction::destroy($request->transaction_id);
         session()->flash('transaction_deleted', 'The transaction has been deleted');
         return back();
 
     }
+    public function show(Transaction $transaction){
 
-//    public function destroy(Transaction $transaction){
-//
-//        //dd($request->all());
-//        //$user->delete();
-//        try {
-//            Transaction::destroy($transaction->id);
-//            $transaction->delete();
-//            session()->flash('transaction_deleted', 'The transaction has been deleted');
-//            return back();
-//        }catch (Exception $exception){
-//            session()->flash('transaction_deleted', 'error');
-//            return back();
-//        }
-//
-//    }
+        return view('transactions.show', [
+            'transaction'=>$transaction,
+            'project'=>Project::latest()->first()
+        ]);
+    }
+
+    public function update(Transaction $transaction){
+        $inputs = request()->validate([
+            'customer'=> ['required'],
+            'firstname'=> ['required'],
+            'mode_of_payment'=> ['required', 'notIn:0'],
+            'spending_amount'=> ['required'],
+            'points'=> ['required'],
+            'gift_value'=> ['required'],
+            'teller_id'=> ['required'],
+        ]);
+
+        $transaction->user_id = $inputs['customer'];
+        $transaction->firstname = Str::ucfirst($inputs['firstname']);
+        $transaction->mode_of_payment = $inputs['mode_of_payment'];
+        $transaction->spending_amount = str_replace(',', '', $inputs['spending_amount']);
+        $transaction->points = $inputs['points'];
+        $transaction->gift_value = $inputs['gift_value'];
+        $transaction->teller_id = $inputs['teller_id'];
+
+        if($transaction->isDirty('customer') OR
+            $transaction->isDirty('firstname') OR
+            $transaction->isDirty('mode_of_payment') OR
+            $transaction->isDirty('spending_amount') OR
+            $transaction->isDirty('points') OR
+            $transaction->isDirty('gift_value') OR
+            $transaction->isDirty('teller_id')
+
+        ){
+            $transaction->update();
+
+            $user = User::find($inputs['customer']);
+            $user->spending_amount += str_replace(',', '', $inputs['spending_amount']);
+            $user->points += $inputs['points'];
+            $user->gift_value += $inputs['gift_value'];
+            $user->save();
+            Session::flash('updated_transaction', 'Transaction was successfully updated!');
+            return back();
+        }
+
+        if($transaction->isClean('customer') OR
+            $transaction->isClean('firstname') OR
+            $transaction->isClean('mode_payment') OR
+            $transaction->isClean('spending_amount') OR
+            $transaction->isClean('points') OR
+            $transaction->isClean('gift_value') OR
+            $transaction->isClean('teller_id')
+
+        ){
+            session()->flash('updated_not','No changes made!');
+            return back();
+        }
+    }
 
 }

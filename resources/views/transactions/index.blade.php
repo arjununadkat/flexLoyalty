@@ -30,24 +30,40 @@
                         <!-- Item -->
                         @foreach($transactions as $transaction)
                             <tr>
-                                {{--                                onclick="window.location='{{route('user.profile.show', $user->id)}}';"--}}
                                 <td class="border-0 fw-bold">{{$transaction->id}}</td>
+                                <td class="border-0 fw-bold">{{$transaction->user_id}}</td>
+                                <td class="border-0 fw-bold">{{$transaction->firstname}}</td>
+{{--                                onclick="window.location='{{route('user.profile.show', $user->id)}}';"--}}
                                 <td class="border-0">
-                                    <a href="#" class="d-flex align-items-center">
-                                        <div><span class="h6">{{$transaction->user_id}}</span></div>
+                                    <a href="{{route('transaction.show', $transaction->id)}}" class="d-flex align-items-center">
+                                        <div><span class="h6">{{$transaction->mode_of_payment}}</span></div>
                                     </a>
                                 </td>
                                 <td class="border-0">
                                     <a href="#" class="d-flex align-items-center">
-                                        <div><span class="h6">{{$transaction->firstname}}</span></div>
+                                        <div><span class="h6">{{$transaction->spending_amount}}</span></div>
                                     </a>
                                 </td>
-                                <td class="border-0 fw-bold">{{$transaction->mode_of_payment}}</td>
-                                <td class="border-0 fw-bold">{{$transaction->spending_amount}}</td>
-                                <td class="border-0 fw-bold">{{$transaction->points}}</td>
-                                <td class="border-0 fw-bold">{{$transaction->gift_value}}</td>
-                                <td class="border-0 fw-bold">{{$transaction->teller_id}}</td>
-                                <td class="border-0 fw-bold">{{\Illuminate\Support\Carbon::parse($transaction->created_at)}}</td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">{{$transaction->points}}</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">{{$transaction->gift_value}}</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">{{$transaction->teller_id}}</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">{{$transaction->created_at}}</span></div>
+                                    </a>
+                                </td>
                                 <td>
                                     <button type="button" id="deletebutton" class="btn btn-danger delete"
                                             data-toggle="modal"
