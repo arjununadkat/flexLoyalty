@@ -51,6 +51,14 @@ class TransactionController extends Controller
 
         ]);
 
+        $user = User::find(request('customer'));
+
+        $user->transactions_number += 1;
+        $user->spending_amount += str_replace(',', '', request('spending_amount'));
+        $user->points += request('points');
+        $user->gift_value += request('gift_value');
+        $user->save();
+
         Session::flash('created_transaction', 'The Transaction was Successfully Created');
         return back();
     }
