@@ -47,7 +47,7 @@
                                 <td class="border-0 fw-bold">{{$transaction->points}}</td>
                                 <td class="border-0 fw-bold">{{$transaction->gift_value}}</td>
                                 <td class="border-0 fw-bold">{{$transaction->teller_id}}</td>
-                                <td class="border-0 fw-bold">{{$transaction->created_at}}</td>
+                                <td class="border-0 fw-bold">{{\Illuminate\Support\Carbon::parse($transaction->created_at)}}</td>
                                 <td>
                                     <button type="button" id="deletebutton" class="btn btn-danger delete"
                                             data-toggle="modal"

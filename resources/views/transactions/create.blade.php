@@ -101,6 +101,8 @@
                 <input hidden type="number" id="teller_id" name="teller_id" value="{{auth()->user()->id}}">
                 <input hidden type="number" id="constant" name="constant" value="{{$project->constant}}">
                 <input hidden type="number" id="benefit_value" name="benefit_value" value="{{$project->benefit_value}}">
+                <input hidden type="text" id="gift_value_points" name="gift_value_points" value="{{$project->gift_value_points}}">
+                <input type="hidden" id="project_gift_value" name="project_gift_value" value="{{$project->gift_value}}">
             </form>
         </div>
         <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
@@ -132,11 +134,14 @@
                 gift_value = form.gift_value;
                 constants = document.getElementById('constant').value;
                 benefit_value = document.getElementById('benefit_value').value;
+                project_gv = document.getElementById('project_gift_value').value;
+                project_gvp = document.getElementById('gift_value_points').value;
+
             window.calculate = function (){
                 var x = spendingAmount.value;
 
-                points.value = (x.replace(/\,/g,'') / constants);
-                gift_value.value = ( x.replace(/\,/g,'') * benefit_value);
+                points.value = Math.round(x.replace(/\,/g,'') / constants);
+                gift_value.value = points.value * (project_gv/project_gvp);
             }
 
 

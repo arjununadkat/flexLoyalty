@@ -103,7 +103,7 @@
                     var c = parseFloat(gvp.value);
                     var y = gift_value.value;
                     constants.value = (x.replace(/\,/g,'') / c);
-                    benefit_value.value = (( x.replace(/\,/g,'') / y.replace(/\,/g,'') ) / 100);
+                    benefit_value.value = (  y.replace(/\,/g,'')/ x.replace(/\,/g,'') ) ;
                 }
             </script>
 {{--minimum spending divided by gift value divided by 100--}}
