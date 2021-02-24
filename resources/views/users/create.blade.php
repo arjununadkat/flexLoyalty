@@ -164,7 +164,9 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="mt-4">
                 <button class="btn btn-primary">Create</button>
+                </div>
             </form>
         </div>
         <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>

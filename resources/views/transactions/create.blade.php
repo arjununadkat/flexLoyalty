@@ -95,7 +95,17 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <button class="btn btn-primary">Confirm</button>
+                <div class="row">
+                    <div class="col-sm-4">
+                <button type="submit" class="submit btn btn-primary">Confirm</button>
+                    </div>
+                    <div class="col-sm-4">
+                <button class="btn btn-secondary">Current Points</button>
+                    </div>
+                        <div class="col-sm-4">
+                <button class="btn btn-tertiary btn-lg">Redeem</button>
+                        </div>
+                </div>
                 <input hidden type="number" id="teller_id" name="teller_id" value="{{auth()->user()->id}}">
                 <input hidden type="number" id="constant" name="constant" value="{{$project->constant}}">
                 <input hidden type="number" id="benefit_value" name="benefit_value" value="{{$project->benefit_value}}">
@@ -104,6 +114,34 @@
             </form>
         </div>
         <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
+            <div class="card border-light shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-centered table-hover table-nowrap mb-0 rounded">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="border-0">Number Of Transactions</th>
+                                <th class="border-0">Spending Amount</th>
+                                <th class="border-0">Points</th>
+                                <th class="border-0">Gift Value</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Item -->
+                                <tr id="tr">
+                                    <td id="n_o_t" class="border-0 fw-bold"></td>
+                                    <td id="s_a" class="border-0 fw-bold"></td>
+                                    <td id="points_td" class="border-0 fw-bold"></td>
+                                    <td id="gift_value_td" class="border-0 fw-bold"></td>
+                                </tr>
+                            <!-- End of Item -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
         <x-modal.Amodal-master>
             @section('header')
                 Transaction has been created
@@ -150,7 +188,20 @@
                       id: document.getElementById('customer').value
                     },
                     success: function(result){
-                        document.getElementById('firstname').value = result.firstname
+
+                        if (!$.trim(result)){
+                            document.getElementById('firstname').value = null
+                            document.getElementById('n_o_t').innerHTML = null
+                            document.getElementById('s_a').innerHTML = null
+                            document.getElementById('points_td').innerHTML = null
+                            document.getElementById('gift_value_td').innerHTML = null
+                        }else{
+                            document.getElementById('firstname').value = result.firstname
+                            document.getElementById('n_o_t').innerHTML = result.transactions_number
+                            document.getElementById('s_a').innerHTML = result.spending_amount
+                            document.getElementById('points_td').innerHTML = result.points
+                            document.getElementById('gift_value_td').innerHTML = result.gift_value
+                        }
                 }});
             }
 
