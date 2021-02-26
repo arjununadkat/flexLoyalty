@@ -59,59 +59,93 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="points">Spending Amount</label>
-                    <input type="text"
-                           class="form-control number-separator @error('spending_amount') is-invalid @enderror"
-                           name="spending_amount"
-                           id="spending_amount"
-                           required>
-                    <small id="spending_amountHelp" class="form-text text-muted">Please enter the Spending Amount</small>
-                    @error('spending_amount')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="address">Points</label>
-                    <input type="number"
-                           class="form-control @error('points') is-invalid @enderror"
-                           name="points"
-                           id="points"
-                           required>
-                    <small id="pointsHelp" class="form-text text-muted">Number of Points to be added</small>
-                    @error('points')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label for="gift_value">Gift Value</label>
-                    <input type="text"
-                           class="form-control number-separator @error('gift_value') is-invalid @enderror"
-                           name="gift_value"
-                           id="gift_value"
-                           required>
-                    <small id="gift_valueHelp" class="form-text text-muted">Please input their password</small>
-                    @error('gift_value')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="points">Spending Amount</label>
+                            <input type="text"
+                                   class="form-control number-separator @error('spending_amount') is-invalid @enderror"
+                                   name="spending_amount"
+                                   id="spending_amount"
+                                   required>
+                            <small id="spending_amountHelp" class="form-text text-muted">Please enter the Spending Amount</small>
+                            @error('spending_amount')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="address">Points</label>
+                            <input type="number"
+                                   class="form-control @error('points') is-invalid @enderror"
+                                   name="points"
+                                   id="points"
+                                   required>
+                            <small id="pointsHelp" class="form-text text-muted">Number of Points to be added</small>
+                            @error('points')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="gift_value">Gift Value</label>
+                            <input type="text"
+                                   class="form-control number-separator @error('gift_value') is-invalid @enderror"
+                                   name="gift_value"
+                                   id="gift_value"
+                                   required>
+                            <small id="gift_valueHelp" class="form-text text-muted">Please input their password</small>
+                            @error('gift_value')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
-                <button type="submit" class="submit btn btn-primary">Confirm</button>
+                        <div class="mb-3">
+                            <label for="amount_payable">Amount Payable</label>
+                            <input type="text"
+                                   class="form-control number-separator @error('discount') is-invalid @enderror"
+                                   name="amount_payable"
+                                   id="amount_payable"
+                                   required>
+                            <small id="amount_payableHelp" class="form-text text-muted">Please ask the customer to pay this amount</small>
+                            @error('amount_payable')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                     <div class="col-sm-4">
-                <button class="btn btn-secondary">Current Points</button>
-                    </div>
-                        <div class="col-sm-4">
-                <button class="btn btn-tertiary btn-lg">Redeem</button>
+                        <div class="mb-3">
+                            <label for="discount">Discount</label>
+                            <input type="text"
+                                   class="form-control number-separator @error('discount') is-invalid @enderror"
+                                   name="discount"
+                                   id="discount"
+                                   required>
+                            <small id="discountHelp" class="form-text text-muted">This is the applied discount</small>
+                            @error('discount')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                    </div>
                 </div>
+                <div class="row">
+
+                </div>
+                <button type="submit" class="submit btn btn-primary">Confirm</button>
                 <input hidden type="number" id="teller_id" name="teller_id" value="{{auth()->user()->id}}">
                 <input hidden type="number" id="constant" name="constant" value="{{$project->constant}}">
                 <input hidden type="number" id="benefit_value" name="benefit_value" value="{{$project->benefit_value}}">
                 <input hidden type="text" id="gift_value_points" name="gift_value_points" value="{{$project->gift_value_points}}">
                 <input type="hidden" id="project_gift_value" name="project_gift_value" value="{{$project->gift_value}}">
             </form>
+            <div class="mt-4 mb-4">
+                <button id="redeem" data-bs-toggle="modal" data-bs-target="#modalredeem" class="btn btn-tertiary btn-lg">Redeem</button>
+            </div>
         </div>
         <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
             <div class="card border-light shadow-sm">
@@ -139,10 +173,58 @@
                         </table>
                     </div>
                 </div>
-
-
             </div>
-        <x-modal.Amodal-master>
+            <div class="modal fade" id="modalredeem" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body p-0">
+                            <div class="card border-light p-3 p-lg-4">
+                                <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div class="card-header border-0 text-center pb-0">
+                                    <h2 class="h4">Redeem Gifts</h2>
+                                    <span>Please input the redeemable points or gift value</span>
+                                </div>
+                                <div class="card-body p-0 pl-g-3">
+                                    <form action="#" class="mt-4">
+                                        <!-- Form -->
+                                        <div class="form-group mb-4">
+                                            <label for="redeem_points">Points</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text" id="basic-addon1"><span class="fas fa-envelope"></span></span>
+                                                <input type="number" class="form-control @error('redeem_points') is-invalid @enderror" placeholder="e.g. 100" id="redeem_points" required>
+                                            </div>
+                                            <small id="redeem_pointsHelp" class="form-text text-muted">Number of points you wish to redeem</small>
+                                            @error('redeem_points')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <!-- End of Form -->
+                                        <div class="form-group">
+                                            <!-- Form -->
+                                            <div class="form-group mb-4">
+                                                <label for="redeem_gift_value">Gift Value</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text" id="basic-addon2"><span class="fas fa-unlock-alt"></span></span>
+                                                    <input type="text" placeholder="e.g. 100,000/=" class="form-control number separator @error('redeem_gift_value') is-invalid @enderror" id="redeem_gift_value" required>
+                                                </div>
+                                                <small id="redeem_gift_valueHelp" class="form-text text-muted">Amount of gift value you wish to redeem</small>
+                                                @error('redeem_gift_value')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="d-grid">
+                                                <button type="submit" class="btn btn-dark">Confirm</button>
+                                            </div>
+                                            <!-- End of Form -->
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <x-modal.Amodal-master>
             @section('header')
                 Transaction has been created
             @endsection
