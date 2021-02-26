@@ -96,6 +96,10 @@ class TransactionController extends Controller
             'teller_id'=> ['required'],
         ]);
 
+        $newspend = str_replace(',','',$inputs['spending_amount']) - $transaction->spending_amount;
+        $newpoints = $inputs['points'] - $transaction->points;
+        $newgift_value = $inputs['gift_value'] - $transaction->gift_value;
+
         $transaction->user_id = $inputs['customer'];
         $transaction->firstname = Str::ucfirst($inputs['firstname']);
         $transaction->mode_of_payment = $inputs['mode_of_payment'];
@@ -116,9 +120,9 @@ class TransactionController extends Controller
             $transaction->update();
 
             $user = User::find($inputs['customer']);
-            $user->spending_amount += str_replace(',', '', $inputs['spending_amount']);
-            $user->points += $inputs['points'];
-            $user->gift_value += $inputs['gift_value'];
+            $user->spending_amount += $newspend;
+            $user->points += $newpoints;
+            $user->gift_value += $newgift_value;
             $user->save();
             Session::flash('updated_transaction', 'Transaction was successfully updated!');
             return back();
