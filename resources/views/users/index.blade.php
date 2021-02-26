@@ -85,8 +85,6 @@
                     var user_id = button.data('user_id');
                     var modal = $(this);
                     modal.find('.modal-footer #user_id').val(user_id);
-
-
                 })
 
 

@@ -121,8 +121,8 @@
                     <div class="col-sm-4">
                         <div class="mb-3">
                             <label for="discount">Discount</label>
-                            <input type="text"
-                                   class="form-control number-separator @error('discount') is-invalid @enderror"
+                            <input type="number"
+                                   class="form-control @error('discount') is-invalid @enderror"
                                    name="discount"
                                    id="discount"
                                    required>
@@ -133,9 +133,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-
-                </div>
+                <input hidden type="text" id="redeem_gift_valueval">
+                <input hidden type="number" id="redeem_pointsval">
                 <button type="submit" class="submit btn btn-primary">Confirm</button>
                 <input hidden type="number" id="teller_id" name="teller_id" value="{{auth()->user()->id}}">
                 <input hidden type="number" id="constant" name="constant" value="{{$project->constant}}">
@@ -185,13 +184,13 @@
                                     <span>Please input the redeemable points or gift value</span>
                                 </div>
                                 <div class="card-body p-0 pl-g-3">
-                                    <form action="#" class="mt-4">
+                                    <form action="#" class="mt-4" id="redeemForm">
                                         <!-- Form -->
                                         <div class="form-group mb-4">
                                             <label for="redeem_points">Points</label>
                                             <div class="input-group">
                                                 <span class="input-group-text" id="basic-addon1"><span class="fas fa-envelope"></span></span>
-                                                <input type="number" class="form-control @error('redeem_points') is-invalid @enderror" placeholder="e.g. 100" id="redeem_points" required>
+                                                <input type="number" class="form-control @error('redeem_points') is-invalid @enderror" placeholder="e.g. 100" id="redeem_points" value="" required>
                                             </div>
                                             <small id="redeem_pointsHelp" class="form-text text-muted">Number of points you wish to redeem</small>
                                             @error('redeem_points')
@@ -205,16 +204,19 @@
                                                 <label for="redeem_gift_value">Gift Value</label>
                                                 <div class="input-group">
                                                     <span class="input-group-text" id="basic-addon2"><span class="fas fa-unlock-alt"></span></span>
-                                                    <input type="text" placeholder="e.g. 100,000/=" class="form-control number separator @error('redeem_gift_value') is-invalid @enderror" id="redeem_gift_value" required>
+                                                    <input type="text" placeholder="e.g. 100,000/=" class="form-control number-separator @error('redeem_gift_value') is-invalid @enderror" id="redeem_gift_value" required>
                                                 </div>
                                                 <small id="redeem_gift_valueHelp" class="form-text text-muted">Amount of gift value you wish to redeem</small>
                                                 @error('redeem_gift_value')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-                                            <div class="d-grid">
-                                                <button type="submit" class="btn btn-dark">Confirm</button>
-                                            </div>
+                                            <button type="button"
+                                                    class="btn btn-tertiary"
+                                                    data-bs-dismiss="modal"
+                                                    id="modalConfirmbtn"
+
+                                            >Confirm</button>
                                             <!-- End of Form -->
                                         </div>
                                     </form>
@@ -223,6 +225,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div id="result">
+
             </div>
             <x-modal.Amodal-master>
             @section('header')
@@ -244,12 +249,28 @@
             @endif
         </script>
         <script>
+            $(document).ready(function (){
+                $("#modalConfirmbtn").click(function (){
+                    var gift_value = $("#modalredeem #redeem_gift_value").val();
+                    $("#redeem_gift_valueval").val(gift_value);
+
+                    var points = $("#modalredeem #redeem_points").val();
+                    $("#redeem_pointsval").val(points);
+
+                    var x = document.getElementById('redeem_gift_valueval').value;
+                    var form =document.forms.transactionForm,
+                        discount = form.discount;
+                    discount.value = x.replace(/\,/g,'');
+                });
+            });
+
             var form =document.forms.transactionForm,
                 userid = form.customer,
                 firstname = form.firstname,
                 spendingAmount = form.spending_amount,
                 points = form.points,
                 gift_value = form.gift_value;
+                amount_payable = form.amount_payable;
                 constants = document.getElementById('constant').value;
                 benefit_value = document.getElementById('benefit_value').value;
                 project_gv = document.getElementById('project_gift_value').value;
@@ -257,9 +278,12 @@
 
             window.calculate = function (){
                 var x = spendingAmount.value;
+                var y = discount.value
+
 
                 points.value = Math.round(x.replace(/\,/g,'') / constants);
                 gift_value.value = points.value * (project_gv/project_gvp);
+                amount_payable.value = (x.replace(/\,/g,'') - y).toLocaleString();
             }
 
 
@@ -286,6 +310,8 @@
                         }
                 }});
             }
+
+
 
 
 
