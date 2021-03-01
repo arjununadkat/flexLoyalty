@@ -38,6 +38,7 @@ class TransactionController extends Controller
             'points'=> ['required'],
             'gift_value'=> ['required'],
             'teller_id'=> ['required'],
+            'amount_payable'=> ['required'],
 
         ]);
         Transaction::create([
@@ -48,6 +49,9 @@ class TransactionController extends Controller
             'points'=>request('points'),
             'gift_value'=>request('gift_value'),
             'teller_id'=>request('teller_id'),
+            'redeemable_gift_value'=>str_replace(',', '', request('redeemable_gift_value')),
+            'redeemable_points'=>request('redeemable_points'),
+            'amount_payable'=>str_replace(',', '', request('amount_payable')),
 
         ]);
 
@@ -55,8 +59,8 @@ class TransactionController extends Controller
 
         $user->transactions_number += 1;
         $user->spending_amount += str_replace(',', '', request('spending_amount'));
-        $user->points += request('points');
-        $user->gift_value += request('gift_value');
+        $user->points += (request('points') - request('redeemable_points'));
+        $user->gift_value += (request('gift_value') - str_replace(',', '', request('redeemable_gift_value')));
         $user->save();
 
         Session::flash('created_transaction', 'The Transaction was Successfully Created');
@@ -94,11 +98,17 @@ class TransactionController extends Controller
             'points'=> ['required'],
             'gift_value'=> ['required'],
             'teller_id'=> ['required'],
+            'redeemable_gift_value'=> ['required'],
+            'redeemable_points'=> ['required'],
+            'amount_payable'=> ['required'],
         ]);
 
         $newspend = str_replace(',','',$inputs['spending_amount']) - $transaction->spending_amount;
         $newpoints = $inputs['points'] - $transaction->points;
         $newgift_value = $inputs['gift_value'] - $transaction->gift_value;
+        $newredeemable_gift_value = str_replace(',','',$inputs['redeemable_gift_value']) - $transaction->redeemable_gift_value;
+        $newredeemable_points = $inputs['redeemable_points'] - $transaction->redeemable_points;
+
 
         $transaction->user_id = $inputs['customer'];
         $transaction->firstname = Str::ucfirst($inputs['firstname']);
@@ -107,6 +117,9 @@ class TransactionController extends Controller
         $transaction->points = $inputs['points'];
         $transaction->gift_value = $inputs['gift_value'];
         $transaction->teller_id = $inputs['teller_id'];
+        $transaction->redeemable_gift_value = str_replace(',', '', $inputs['redeemable_gift_value']);
+        $transaction->redeemable_points = $inputs['redeemable_points'];
+        $transaction->amount_payable = str_replace(',', '', $inputs['amount_payable']);
 
         if($transaction->isDirty('customer') OR
             $transaction->isDirty('firstname') OR
@@ -114,15 +127,21 @@ class TransactionController extends Controller
             $transaction->isDirty('spending_amount') OR
             $transaction->isDirty('points') OR
             $transaction->isDirty('gift_value') OR
-            $transaction->isDirty('teller_id')
+            $transaction->isDirty('teller_id') OR
+            $transaction->isDirty('redeemable_gift_value') OR
+            $transaction->isDirty('redeemable_points') OR
+            $transaction->isDirty('amount_payable')
 
         ){
             $transaction->update();
 
             $user = User::find($inputs['customer']);
+
             $user->spending_amount += $newspend;
-            $user->points += $newpoints;
-            $user->gift_value += $newgift_value;
+            $user->points += $newpoints - $newredeemable_points;
+            $user->gift_value += $newgift_value - $newredeemable_gift_value;
+
+
             $user->save();
             Session::flash('updated_transaction', 'Transaction was successfully updated!');
             return back();
@@ -134,7 +153,10 @@ class TransactionController extends Controller
             $transaction->isClean('spending_amount') OR
             $transaction->isClean('points') OR
             $transaction->isClean('gift_value') OR
-            $transaction->isClean('teller_id')
+            $transaction->isClean('teller_id') OR
+            $transaction->isClean('redeemable_gift_value') OR
+            $transaction->isClean('redeemable_points') OR
+            $transaction->isClean('amount_payable')
 
         ){
             session()->flash('updated_not','No changes made!');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDiscountAmountPayableTransactions extends Migration
+class AddRedeemablesAndAmountPayable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,8 @@ class AddDiscountAmountPayableTransactions extends Migration
     {
         Schema::table('transactions', function (Blueprint $table) {
             //
-            $table->integer('discount')->nullable();
+            $table->integer('redeemable_gift_value');
+            $table->integer('redeemable_points');
             $table->integer('amount_payable');
         });
     }

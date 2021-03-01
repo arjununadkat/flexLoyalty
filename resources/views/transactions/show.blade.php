@@ -80,45 +80,103 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="points">Spending Amount</label>
-                    <input type="text"
-                           class="form-control number-separator @error('spending_amount') is-invalid @enderror"
-                           name="spending_amount"
-                           id="spending_amount"
-                           value="{{$transaction->spending_amount}}"
-                           required>
-                    <small id="spending_amountHelp" class="form-text text-muted">Please enter the Spending Amount</small>
-                    @error('spending_amount')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="points">Spending Amount</label>
+                            <input type="text"
+                                   class="form-control number-separator @error('spending_amount') is-invalid @enderror"
+                                   name="spending_amount"
+                                   id="spending_amount"
+                                   value="{{$transaction->spending_amount}}"
+                                   required>
+                            <small id="spending_amountHelp" class="form-text text-muted">Please enter the Spending Amount</small>
+                            @error('spending_amount')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="address">Points</label>
+                            <input type="number"
+                                   class="form-control @error('points') is-invalid @enderror"
+                                   name="points"
+                                   id="points"
+                                   value="{{$transaction->points}}"
+                                   required>
+                            <small id="pointsHelp" class="form-text text-muted">Number of Points to be added</small>
+                            @error('points')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="gift_value">Gift Value</label>
+                            <input type="text"
+                                   class="form-control number-separator @error('gift_value') is-invalid @enderror"
+                                   name="gift_value"
+                                   id="gift_value"
+                                   value="{{$transaction->gift_value}}"
+                                   required>
+                            <small id="gift_valueHelp" class="form-text text-muted">Please input their password</small>
+                            @error('gift_value')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="address">Points</label>
-                    <input type="number"
-                           class="form-control @error('points') is-invalid @enderror"
-                           name="points"
-                           id="points"
-                           value="{{$transaction->points}}"
-                           required>
-                    <small id="pointsHelp" class="form-text text-muted">Number of Points to be added</small>
-                    @error('points')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="amount_payable">Amount Payable</label>
+                            <input type="text"
+                                   class="form-control number-separator @error('discount') is-invalid @enderror"
+                                   name="amount_payable"
+                                   id="amount_payable"
+                                   value="{{$transaction->amount_payable}}"
+                                   required>
+                            <small id="amount_payableHelp" class="form-text text-muted">Please ask the customer to pay this amount</small>
+                            @error('amount_payable')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="redeemable_gift_value">Redeemable Gift Value</label>
+                            <input type="text"
+                                   class="form-control number-separator @error('redeemable_gift_value') is-invalid @enderror"
+                                   name="redeemable_gift_value"
+                                   id="redeemable_gift_value"
+                                   value="{{$transaction->redeemable_gift_value}}"
+                                   required>
+                            <small id="redeemable_gift_valueHelp" class="form-text text-muted">Please input the gift value</small>
+                            @error('redeemable_gift_value')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="redeemable_points">Redeemable Points</label>
+                            <input type="number"
+                                   class="form-control @error('redeemable_points') is-invalid @enderror"
+                                   name="redeemable_points"
+                                   id="redeemable_points"
+                                   value="{{$transaction->redeemable_points}}"
+                                   required>
+                            <small id="redeemable_pointsHelp" class="form-text text-muted">This is the points redeemable</small>
+                            @error('redeemable_points')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="gift_value">Gift Value</label>
-                    <input type="text"
-                           class="form-control number-separator @error('gift_value') is-invalid @enderror"
-                           name="gift_value"
-                           id="gift_value"
-                           value="{{$transaction->gift_value}}"
-                           required>
-                    <small id="gift_valueHelp" class="form-text text-muted">Please input their password</small>
-                    @error('gift_value')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+
+
+
                 <button class="btn btn-primary">Update</button>
                 <input hidden type="number" id="teller_id" name="teller_id" value="{{auth()->user()->id}}">
                 <input hidden type="number" id="constant" name="constant" value="{{$project->constant}}">
@@ -154,6 +212,9 @@
                 spendingAmount = form.spending_amount,
                 points = form.points,
                 gift_value = form.gift_value;
+            redeemable_gift_value = form.redeemable_gift_value;
+            redeemable_points = form.redeemable_points;
+            amount_payable = form.amount_payable;
             constants = document.getElementById('constant').value;
             benefit_value = document.getElementById('benefit_value').value;
             project_gv = document.getElementById('project_gift_value').value;
@@ -161,9 +222,11 @@
 
             window.calculate = function (){
                 var x = spendingAmount.value;
-
+                var y = redeemable_gift_value.value;
                 points.value = Math.round(x.replace(/\,/g,'') / constants);
                 gift_value.value = points.value * (project_gv/project_gvp);
+                amount_payable.value = (x.replace(/\,/g,'') - y.replace(/\,/g,'')).toLocaleString();
+                redeemable_points.value = y.replace(/\,/g,'') / (project_gv/project_gvp);
             }
 
 
