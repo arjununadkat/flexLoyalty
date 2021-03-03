@@ -16,6 +16,17 @@
 */
 @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700&display=swap");
 
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: white !important;
+    border: 1px solid #F8BD7A!important;
+    background-color: #F8BD7A!important;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #F8BD7A), color-stop(100%, #F8BD7A))!important;
+    background: -webkit-linear-gradient(top, #F8BD7A 0%, #F8BD7A 100%)!important;
+    background: -moz-linear-gradient(top, #F8BD7A 0%, #F8BD7A 100%)!important;
+    background: -ms-linear-gradient(top, #F8BD7A 0%, #F8BD7A 100%)!important;
+    background: -o-linear-gradient(top, #F8BD7A 0%, #F8BD7A 100%)!important;
+    background: linear-gradient(to bottom, #F8BD7A 0%, #F8BD7A 100%)!important;
+}
 .datepicker {
     display: none;
 }

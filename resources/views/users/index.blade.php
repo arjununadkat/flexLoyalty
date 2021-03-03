@@ -11,7 +11,7 @@
             <div class="card border-light shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-centered table-hover table-nowrap mb-0 rounded">
+                    <table id="usersTable" class="table table-centered table-hover table-nowrap mb-0 rounded">
                         <thead class="thead-light">
                         <tr>
                             <th class="border-0">ID</th>
@@ -40,7 +40,11 @@
                                         <div><span class="h6">{{$user->lastname}}</span></div>
                                     </a>
                                 </td>
-                                <td class="border-0 fw-bold">{{$user->transactions_number}}</td>
+                                <td class="border-0">
+                                    <a href="{{route('user.transactions', $user->id)}}" class="d-flex align-items-center">
+                                        <div><span class="h6">{{$user->transactions_number}}</span></div>
+                                    </a>
+                                </td>
                                 <td class="border-0 fw-bold">{{$user->spending_amount}}</td>
                                 <td class="border-0 fw-bold">{{$user->points}}</td>
                                 <td class="border-0 fw-bold">{{$user->gift_value}}</td>
@@ -61,16 +65,16 @@
 
             </div>
             <x-modal.Dmodal-master>
-                @section('header')
+                @section('Dheader')
                     You are about to delete a user
                 @endsection
-                @section('paragraph')
+                @section('Dparagraph')
                     Are you sure you want to delete this user?
                 @endsection
-                @section('action')
+                @section('Daction')
                         action="{{route('user.destroy', 'user')}}"
                 @endsection
-                @section('input')
+                @section('Dinput')
                         <input type=hidden id="user_id" name="user_id">
                 @endsection
 
@@ -87,6 +91,14 @@
                     modal.find('.modal-footer #user_id').val(user_id);
                 })
 
+                $(document).ready(function() {
+                    $('#usersTable').DataTable( {
+                        responsive: true,
+                        "language": {
+                            "thousands": ","
+                        }
+                    } );
+                } );
 
             </script>
         @endsection

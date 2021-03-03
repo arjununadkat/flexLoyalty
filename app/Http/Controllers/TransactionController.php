@@ -21,6 +21,16 @@ class TransactionController extends Controller
         ]);
     }
 
+    public function userShow(User $user){
+
+        $user_id = $user->id;
+        $transactions = Transaction::where('user_id', $user_id)->get();
+        return view('transactions.index',[
+            'transactions'=>$transactions
+        ]);
+
+    }
+
     public function create(){
         return view('transactions.create',[
             'users'=>User::all(),
@@ -78,7 +88,7 @@ class TransactionController extends Controller
 
         Transaction::destroy($request->transaction_id);
         session()->flash('transaction_deleted', 'The transaction has been deleted');
-        return back();
+        return redirect()->route('transactions.index');
 
     }
     public function show(Transaction $transaction){

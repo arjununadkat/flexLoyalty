@@ -178,6 +178,10 @@
 
 
                 <button class="btn btn-primary">Update</button>
+                <button type="button" id="deletebutton" class="btn btn-danger delete"
+                        data-toggle="modal"
+                        data-transaction_id='{{$transaction->id}}'
+                        data-target="#deletemodal">Delete</button>
                 <input hidden type="number" id="teller_id" name="teller_id" value="{{auth()->user()->id}}">
                 <input hidden type="number" id="constant" name="constant" value="{{$project->constant}}">
                 <input hidden type="number" id="benefit_value" name="benefit_value" value="{{$project->benefit_value}}">
@@ -197,6 +201,22 @@
                 onclick="location.href='{{ route('dashboard.index') }}'"
             @endsection
         </x-modal.Amodal-master>
+
+        <x-modal.Dmodal-master>
+            @section('Dheader')
+                You are about to delete a transaction
+            @endsection
+            @section('Dparagraph')
+                Are you sure you want to delete this transaction?
+            @endsection
+            @section('Daction')
+                action="{{route('transaction.destroy', 'transaction')}}"
+            @endsection
+            @section('Dinput')
+                <input type=hidden id="transaction_id" name="transaction_id">
+            @endsection
+
+        </x-modal.Dmodal-master>
     @endsection
 
     @section('scripts')
@@ -241,6 +261,12 @@
                     }});
             }
 
+            $('#deletemodal').on('show.bs.modal', function (event){
+                var button = $(event.relatedTarget);
+                var transaction_id = button.data('transaction_id');
+                var modal = $(this);
+                modal.find('.modal-footer #transaction_id').val(transaction_id);
+            })
 
 
         </script>

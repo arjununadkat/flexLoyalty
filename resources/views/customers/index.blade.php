@@ -11,7 +11,7 @@
         <div class="card border-light shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-hover table-centered table-nowrap mb-0 rounded">
+                    <table id="customersTable" class="table table-hover table-centered table-nowrap mb-0 rounded">
                         <thead class="thead-light">
                         <tr>
                             <th class="border-0">ID</th>
@@ -54,5 +54,15 @@
 
     @section('scripts')
 
+            <script>
+                $(document).ready(function() {
+                    $('#customersTable').DataTable( {
+                        responsive: true,
+                        "language": {
+                            "thousands": ","
+                        }
+                    } );
+                } );
+            </script>
     @endsection
 </x-main-master>

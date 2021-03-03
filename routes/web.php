@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function (){
     Route::get('/transaction/fetch_customer',[TransactionController::class, 'fetchCustomer'])->name('transactions.fetch');
     Route::get('/transaction/{transaction}/show', [TransactionController::class, 'show'])->name('transaction.show');
     Route::put('/transaction/{transaction}/update', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::get('/transactions/{user}', [TransactionController::class, 'userShow'])->name('user.transactions');
 
 
 
