@@ -174,9 +174,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
                 <button class="btn btn-primary">Update</button>
                 <button type="button" id="deletebutton" class="btn btn-danger delete"
                         data-toggle="modal"

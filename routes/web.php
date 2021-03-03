@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Chart;
 
 
 
@@ -29,7 +30,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function (){
 
-    Route::get('/dashboard', function () {return view('index');})->name('dashboard.index');
+    Route::get('/dashboard', [Chart::class, 'index'])->name('dashboard.index');
 
 
     Route::get('/logout', [LoginController::class, 'logout']);
