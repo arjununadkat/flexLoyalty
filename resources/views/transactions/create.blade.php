@@ -125,7 +125,7 @@
                                    class="form-control number-separator @error('redeemable_gift_value') is-invalid @enderror"
                                    name="redeemable_gift_value"
                                    id="redeemable_gift_value"
-                                   required>
+                                   >
                             <small id="redeemable_gift_valueHelp" class="form-text text-muted">Please input the gift value</small>
                             @error('redeemable_gift_value')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -139,7 +139,7 @@
                                class="form-control @error('redeemable_points') is-invalid @enderror"
                                name="redeemable_points"
                                id="redeemable_points"
-                               required>
+                               >
                         <small id="redeemable_pointsHelp" class="form-text text-muted">This is the points redeemable</small>
                         @error('redeemable_points')
                         <div class="alert alert-danger">{{ $message }}</div>

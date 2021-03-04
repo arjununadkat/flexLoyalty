@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function (){
     Route::put('/transaction/{transaction}/update', [TransactionController::class, 'update'])->name('transaction.update');
     Route::get('/transactions/{user}', [TransactionController::class, 'userShow'])->name('user.transactions');
 
+    Route::put('/user/check', [UserController::class, 'checkReset'])->name('check.reset');
 
 
 });

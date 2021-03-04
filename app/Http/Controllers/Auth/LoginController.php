@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -36,5 +39,21 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        $users = User::all();
+
+        foreach ($users as $user){
+
+
+            if (Carbon::now()->gt($user->reset_at)){
+                $user->points = 0;
+                $user->gift_value = 0;
+                $user->reset_at = Carbon::now()->addDays(365);
+                $user->save();
+            }
+        }
     }
 }

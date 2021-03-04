@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRedeemablesAndAmountPayable extends Migration
+class AddResetatColumnUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class AddRedeemablesAndAmountPayable extends Migration
      */
     public function up()
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
-            $table->integer('redeemable_gift_value')->nullable();
-            $table->integer('redeemable_points')->nullable();
-            $table->integer('amount_payable');
+            $table->timestamp('reset_at')->nullable();
         });
     }
 
@@ -28,7 +26,7 @@ class AddRedeemablesAndAmountPayable extends Migration
      */
     public function down()
     {
-        Schema::table('transactions', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

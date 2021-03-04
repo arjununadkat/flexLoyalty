@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Role;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -47,6 +48,7 @@ class UserController extends Controller
             'role2'=> ['sometimes'],
             'role3'=> ['sometimes'],
         ]);
+        $current = Carbon::now();
         $user = User::create([
             'username'=>request('username'),
             'firstname'=>Str::ucfirst(request('firstname')),
@@ -55,6 +57,7 @@ class UserController extends Controller
             'gender'=>request('gender'),
             'password'=>Hash::make(request('password')),
             'address'=>Str::ucfirst(request('address')),
+            'reset_at'=>$current->addDays(365),
 
         ]);
         $user->roles()->attach(request('role1'));
@@ -94,6 +97,7 @@ class UserController extends Controller
             'password'=> ['confirmed'],
             'address'=> ['required', 'string', 'max:255'],
         ]);
+        $current = Carbon::now();
         $user = User::create([
             'username'=>request('username'),
             'firstname'=>Str::ucfirst(request('firstname')),
@@ -102,6 +106,7 @@ class UserController extends Controller
             'gender'=>request('gender'),
             'password'=>Hash::make(request('password')),
             'address'=>Str::ucfirst(request('address')),
+            'reset_at'=>$current->addDays(365),
 
         ]);
         $user->roles()->attach('2');
@@ -124,6 +129,7 @@ class UserController extends Controller
             'password'=> ['confirmed'],
             'address'=> ['required', 'string', 'max:255'],
         ]);
+        $current = Carbon::now();
         $user = User::create([
             'username'=>request('username'),
             'firstname'=>Str::ucfirst(request('firstname')),
@@ -132,6 +138,7 @@ class UserController extends Controller
             'gender'=>request('gender'),
             'password'=>Hash::make(request('password')),
             'address'=>Str::ucfirst(request('address')),
+            'reset_at'=>$current->addDays(365),
 
         ]);
         $user->roles()->attach('3');
@@ -218,4 +225,17 @@ class UserController extends Controller
         }
 
     }
+
+    public function checkReset(){
+        $users = User::all();
+
+        foreach ($users as $user){
+            if (Carbon::now()->eq($user->reset_at)){
+                $user->points = 0;
+                $user->gift_value = 0;
+                $user->reset_at = Carbon::now()->addDays(365);
+            }
+        }
+    }
+
 }

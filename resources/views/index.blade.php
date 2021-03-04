@@ -18,9 +18,8 @@
         <div class="col">
             <div id="second"></div>
         </div>
-
     </div>
-@endsection
+    @endsection
 
 @section('scripts')
         <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -135,6 +134,10 @@
                     }]
                 }
             });
+
+        </script>
+
+        <script>
 
         </script>
 @endsection

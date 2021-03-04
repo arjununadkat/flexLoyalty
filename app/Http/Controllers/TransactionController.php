@@ -38,7 +38,7 @@ class TransactionController extends Controller
         ]);
     }
 
-    public function store(){
+    public function store(Request $request){
 
         request()->validate([
             'customer'=> ['required'],
@@ -51,7 +51,9 @@ class TransactionController extends Controller
             'amount_payable'=> ['required'],
 
         ]);
-        Transaction::create([
+        $redeemable_gift_value = str_replace(',', '', request('redeemable_gift_value'));
+        $redeemable_points = request('redeemable_points');
+        $transaction = Transaction::create([
             'user_id'=>request('customer'),
             'firstname'=>Str::ucfirst(request('firstname')),
             'mode_of_payment'=>request('mode_of_payment'),
@@ -59,19 +61,31 @@ class TransactionController extends Controller
             'points'=>request('points'),
             'gift_value'=>request('gift_value'),
             'teller_id'=>request('teller_id'),
-            'redeemable_gift_value'=>str_replace(',', '', request('redeemable_gift_value')),
-            'redeemable_points'=>request('redeemable_points'),
+//            'redeemable_gift_value'=>str_replace(',', '', request('redeemable_gift_value')),
+//            'redeemable_points'=>request('redeemable_points'),
             'amount_payable'=>str_replace(',', '', request('amount_payable')),
-
         ]);
+
 
         $user = User::find(request('customer'));
 
         $user->transactions_number += 1;
         $user->spending_amount += str_replace(',', '', request('spending_amount'));
-        $user->points += (request('points') - request('redeemable_points'));
-        $user->gift_value += (request('gift_value') - str_replace(',', '', request('redeemable_gift_value')));
-        $user->save();
+
+        if (!empty($request->input('redeemable_gift_value'))){
+            $transaction->redeemable_gift_value = $redeemable_gift_value;
+            $transaction->redeemable_points = $redeemable_points;
+            $transaction->save();
+            $user->points += (request('points') - request('redeemable_points'));
+            $user->gift_value += (request('gift_value') - str_replace(',', '', request('redeemable_gift_value')));
+            $user->save();
+        }
+        else{
+            $user->points += request('points');
+            $user->gift_value += request('gift_value');
+            $user->save();
+        }
+
 
         Session::flash('created_transaction', 'The Transaction was Successfully Created');
         return back();
