@@ -58,7 +58,6 @@ class UserController extends Controller
             'password'=>Hash::make(request('password')),
             'address'=>Str::ucfirst(request('address')),
             'reset_at'=>$current->addDays(365),
-
         ]);
         $user->roles()->attach(request('role1'));
 
@@ -69,7 +68,13 @@ class UserController extends Controller
             $user->roles()->attach(request('role3'));
         }
         Session::flash('created_user', 'The User was Successfully Created');
+//        User::sendWelcomeEmail($user);
+        $expiresAt = now()->addDay();
+
+        $user->sendWelcomeNotification($expiresAt);
         return back();
+
+
     }
     public function tellerIndex(){
 

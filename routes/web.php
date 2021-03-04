@@ -7,6 +7,8 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Chart;
+use Spatie\WelcomeNotification\WelcomesNewUsers;
+use App\Http\Controllers\MyWelcomeController;
 
 
 
@@ -25,6 +27,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 Auth::routes();
+
+Route::group(['middleware' => ['web', WelcomesNewUsers::class,]], function () {
+    Route::get('welcome/{user}', [MyWelcomeController::class, 'showWelcomeForm'])->name('welcome');
+    Route::post('welcome/{user}', [MyWelcomeController::class, 'savePassword']);
+});
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
