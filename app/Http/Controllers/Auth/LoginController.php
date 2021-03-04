@@ -44,10 +44,7 @@ class LoginController extends Controller
     public function authenticated(Request $request, $user)
     {
         $users = User::all();
-
         foreach ($users as $user){
-
-
             if (Carbon::now()->gt($user->reset_at)){
                 $user->points = 0;
                 $user->gift_value = 0;

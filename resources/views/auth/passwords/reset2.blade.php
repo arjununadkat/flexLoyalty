@@ -26,7 +26,7 @@
 {{--    <meta property="twitter:description" content="Volt Pro is a Premium Bootstrap 5 Admin Dashboard featuring over 800 components, 10+ plugins and 20 example pages using Vanilla JS.">--}}
 {{--    <meta property="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-bootstrap-5-dashboard/volt-pro-preview.jpg">--}}
 
-<!-- Favicon -->
+    <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="120x120" href="../../assets/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon/favicon-16x16.png">
@@ -62,12 +62,12 @@
     <section class="bg-soft d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <div class="container">
             <div class="row justify-content-center form-bg-image">
-                <p class="text-center"><a href="{{route('login')}}" class="text-gray-700"><i class="fas fa-angle-left me-2"></i> Back to log in</a></p>
+                <p class="text-center"><a href="./sign-in.html" class="text-gray-700"><i class="fas fa-angle-left me-2"></i> Back to log in</a></p>
                 <div class="col-12 d-flex align-items-center justify-content-center">
                     <div class="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                         <h1 class="h3 mb-4">Reset password</h1>
                         <form method="POST" action="{{ route('password.update') }}">
-                            @csrf
+                        @csrf
                             <input type="hidden" name="token" value="{{ $token }}">
                             <!-- Form -->
                             <div class="mb-4">
