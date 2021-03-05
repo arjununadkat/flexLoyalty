@@ -51,44 +51,51 @@ class TransactionController extends Controller
             'amount_payable'=> ['required'],
 
         ]);
-        $redeemable_gift_value = str_replace(',', '', request('redeemable_gift_value'));
-        $redeemable_points = request('redeemable_points');
-        $transaction = Transaction::create([
-            'user_id'=>request('customer'),
-            'firstname'=>Str::ucfirst(request('firstname')),
-            'mode_of_payment'=>request('mode_of_payment'),
-            'spending_amount'=>str_replace(',', '', request('spending_amount')),
-            'points'=>request('points'),
-            'gift_value'=>request('gift_value'),
-            'teller_id'=>request('teller_id'),
-//            'redeemable_gift_value'=>str_replace(',', '', request('redeemable_gift_value')),
-//            'redeemable_points'=>request('redeemable_points'),
-            'amount_payable'=>str_replace(',', '', request('amount_payable')),
-        ]);
 
+        $redeemable_gift_value = str_replace(',', '', request('redeemable_gift_value'));
+        $redeemable_points = intval(request('redeemable_points'));
 
         $user = User::find(request('customer'));
+        $userpoints = $user->points;
+        if ($userpoints<$redeemable_points){
+            Session::flash('enough_points', 'Insufficient Points!');
+            return back();
+        }elseif ($userpoints>$redeemable_points OR $userpoints == 0){
+            $teller = User::find(request('teller_id'));
+            $teller->received_amount += str_replace(',', '', request('amount_payable'));
+            $teller->save();
+            $transaction = Transaction::create([
+                'user_id'=>request('customer'),
+                'firstname'=>Str::ucfirst(request('firstname')),
+                'mode_of_payment'=>request('mode_of_payment'),
+                'spending_amount'=>str_replace(',', '', request('spending_amount')),
+                'points'=>request('points'),
+                'gift_value'=>request('gift_value'),
+                'teller_id'=>request('teller_id'),
+//            'redeemable_gift_value'=>str_replace(',', '', request('redeemable_gift_value')),
+//            'redeemable_points'=>request('redeemable_points'),
+                'amount_payable'=>str_replace(',', '', request('amount_payable')),
+            ]);
 
-        $user->transactions_number += 1;
-        $user->spending_amount += str_replace(',', '', request('spending_amount'));
+            $user->transactions_number += 1;
+            $user->spending_amount += str_replace(',', '', request('spending_amount'));
 
-        if (!empty($request->input('redeemable_gift_value'))){
-            $transaction->redeemable_gift_value = $redeemable_gift_value;
-            $transaction->redeemable_points = $redeemable_points;
-            $transaction->save();
-            $user->points += (request('points') - request('redeemable_points'));
-            $user->gift_value += (request('gift_value') - str_replace(',', '', request('redeemable_gift_value')));
-            $user->save();
+            if (!empty($request->input('redeemable_gift_value'))){
+                $transaction->redeemable_gift_value = $redeemable_gift_value;
+                $transaction->redeemable_points = $redeemable_points;
+                $transaction->save();
+                $user->points += (request('points') - request('redeemable_points'));
+                $user->gift_value += (request('gift_value') - str_replace(',', '', request('redeemable_gift_value')));
+                $user->save();
+            }
+            else{
+                $user->points += request('points');
+                $user->gift_value += request('gift_value');
+                $user->save();
+            }
+            Session::flash('created_transaction', 'The Transaction was Successfully Created');
+            return back();
         }
-        else{
-            $user->points += request('points');
-            $user->gift_value += request('gift_value');
-            $user->save();
-        }
-
-
-        Session::flash('created_transaction', 'The Transaction was Successfully Created');
-        return back();
     }
 
     public function fetchCustomer(Request $request){

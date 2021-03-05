@@ -162,6 +162,7 @@
             </div>
         </div>
         <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
+            <button hidden id="showmd2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deletemodal">show</button>
             <div class="card border-light shadow-sm">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -199,12 +200,30 @@
                 onclick="location.href='{{ route('dashboard.index') }}'"
             @endsection
         </x-modal.Amodal-master>
+            <x-modal.Dmodal-master>
+                @section('Dheader')
+                    Not Enough Points!
+                @endsection
+                @section('Dparagraph')
+                    You cannot perform this transaction because the customer has insufficient points
+                @endsection
+                @section('Daction')
+
+                @endsection
+                @section('Dinput')
+
+                @endsection
+
+            </x-modal.Dmodal-master>
     @endsection
 
     @section('scripts')
         <script>
             @if(\Illuminate\Support\Facades\Session::has('created_transaction'))
             document.getElementById('showmd').click();
+            @endif
+            @if(\Illuminate\Support\Facades\Session::has('enough_points'))
+            document.getElementById('showmd2').click();
             @endif
         </script>
         <script>

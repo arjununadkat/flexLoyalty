@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use PhpParser\Node\Expr\Cast\Int_;
 
 class UserController extends Controller
 {
