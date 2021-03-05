@@ -56,14 +56,15 @@ class TransactionController extends Controller
         $redeemable_points = intval(request('redeemable_points'));
 
         $user = User::find(request('customer'));
+        $teller = User::find(request('teller_id'));
         $userpoints = $user->points;
         if ($userpoints<$redeemable_points){
             Session::flash('enough_points', 'Insufficient Points!');
             return back();
-        }elseif ($userpoints>$redeemable_points OR $userpoints == 0){
-            $teller = User::find(request('teller_id'));
-            $teller->received_amount += str_replace(',', '', request('amount_payable'));
-            $teller->save();
+        }elseif ($userpoints>=$redeemable_points OR $userpoints == 0){
+
+
+
             $transaction = Transaction::create([
                 'user_id'=>request('customer'),
                 'firstname'=>Str::ucfirst(request('firstname')),
@@ -79,6 +80,8 @@ class TransactionController extends Controller
 
             $user->transactions_number += 1;
             $user->spending_amount += str_replace(',', '', request('spending_amount'));
+            $teller->received_amount += str_replace(',', '', request('amount_payable'));
+            $teller->transactions_made += 1;
 
             if (!empty($request->input('redeemable_gift_value'))){
                 $transaction->redeemable_gift_value = $redeemable_gift_value;
@@ -87,11 +90,15 @@ class TransactionController extends Controller
                 $user->points += (request('points') - request('redeemable_points'));
                 $user->gift_value += (request('gift_value') - str_replace(',', '', request('redeemable_gift_value')));
                 $user->save();
+                $teller->points_given += request('redeemable_points');
+                $teller->gift_value_given += str_replace(',', '', request('redeemable_gift_value'));
+                $teller->save();
             }
             else{
                 $user->points += request('points');
                 $user->gift_value += request('gift_value');
                 $user->save();
+                $teller->save();
             }
             Session::flash('created_transaction', 'The Transaction was Successfully Created');
             return back();

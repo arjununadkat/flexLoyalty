@@ -18,9 +18,9 @@
                                 <th class="border-0">First Name</th>
                                 <th class="border-0">Last Name</th>
                                 <th class="border-0">Number Of Transactions</th>
-                                <th class="border-0">Spending Amount</th>
-                                <th class="border-0">Points</th>
-                                <th class="border-0">Gift Value</th>
+                                <th class="border-0">Received Amount</th>
+                                <th class="border-0">Points Given</th>
+                                <th class="border-0">Gift Value Given</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -39,9 +39,9 @@
                                     </a>
                                 </td>
                                 <td class="border-0 fw-bold">{{$user->transactions_number}}</td>
-                                <td class="border-0 fw-bold">{{$user->spending_amount}}</td>
-                                <td class="border-0 fw-bold">{{$user->points}}</td>
-                                <td class="border-0 fw-bold">{{$user->gift_value}}</td>
+                                <td class="border-0 fw-bold">{{$user->received_amount}}</td>
+                                <td class="border-0 fw-bold">{{$user->points_given}}</td>
+                                <td class="border-0 fw-bold">{{$user->gift_value_given}}</td>
                             </tr>
                             @endforeach
                             <!-- End of Item -->

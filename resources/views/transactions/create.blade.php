@@ -162,7 +162,7 @@
             </div>
         </div>
         <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
-            <button hidden id="showmd2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deletemodal">show</button>
+            <button hidden id="showmd2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-warning">show</button>
             <div class="card border-light shadow-sm">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -200,21 +200,15 @@
                 onclick="location.href='{{ route('dashboard.index') }}'"
             @endsection
         </x-modal.Amodal-master>
-            <x-modal.Dmodal-master>
-                @section('Dheader')
-                    Not Enough Points!
-                @endsection
-                @section('Dparagraph')
-                    You cannot perform this transaction because the customer has insufficient points
-                @endsection
-                @section('Daction')
+        <x-modal.Wmodal-master>
+            @section('Wheader')
+                Not Enough Points!
+            @endsection
+            @section('Wparagraph')
+                You cannot perform this transaction because the customer has insufficient points
+            @endsection
 
-                @endsection
-                @section('Dinput')
-
-                @endsection
-
-            </x-modal.Dmodal-master>
+        </x-modal.Wmodal-master>
     @endsection
 
     @section('scripts')
