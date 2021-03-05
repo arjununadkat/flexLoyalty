@@ -61,7 +61,7 @@
     <!-- Section -->
     <section class="bg-soft d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <div class="container">
-            <div class="row justify-content-center form-bg-image">
+            <div class="row justify-content-center form-bg-image" data-background-lg="{{asset('assets/img/illustrations/signin.svg')}}">
                 <p class="text-center"><a href="{{route('login')}}" class="text-gray-700"><i class="fas fa-angle-left me-2"></i> Back to log in</a></p>
                 <div class="col-12 d-flex align-items-center justify-content-center">
                     <div class="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">

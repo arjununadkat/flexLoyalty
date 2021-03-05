@@ -69,7 +69,7 @@ class UserController extends Controller
         }
         Session::flash('created_user', 'The User was Successfully Created');
 //        User::sendWelcomeEmail($user);
-        $expiresAt = now()->addDay();
+        $expiresAt = now()->addMinutes(5);
 
         $user->sendWelcomeNotification($expiresAt);
         return back();

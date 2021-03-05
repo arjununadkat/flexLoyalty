@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Primary Meta Tags -->
-    <title>New password</title>
+    <title>Reset password</title>
 {{--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">--}}
 {{--    <meta name="title" content="Volt Free Bootstrap Dashboard - Reset password">--}}
 {{--    <meta name="author" content="Themesberg">--}}
@@ -61,27 +61,28 @@
     <!-- Section -->
     <section class="bg-soft d-flex align-items-center my-5 mt-lg-6 mb-lg-5">
         <div class="container">
-            <div class="row justify-content-center form-bg-image" data-background-lg="{{asset('assets/img/illustrations/signin.svg')}}">
-{{--                <p class="text-center"><a href="{{route('login')}}" class="text-gray-700"><i class="fas fa-angle-left me-2"></i> Back to log in</a></p>--}}
+            <div class="row justify-content-center form-bg-image">
+                <p class="text-center"><a href="{{route('login')}}" class="text-gray-700"><i class="fas fa-angle-left me-2"></i> Back to log in</a></p>
                 <div class="col-12 d-flex align-items-center justify-content-center">
                     <div class="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-                        <h1 class="h3 mb-4">New password</h1>
+                        <h1 class="h3 mb-4">Reset password</h1>
                         <form method="POST">
                             @csrf
+                            <input type="hidden" name="token" value="{{ $token }}">
                             <input type="hidden" name="email" value="{{ $user->email }}"/>
                             <!-- Form -->
-                        {{--                            <div class="mb-4">--}}
-                        {{--                                <label for="email">{{ __('E-Mail Address') }}</label>--}}
-                        {{--                                <div class="input-group">--}}
-                        {{--                                    <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{ $email ?? old('email') }}" name="email" id="email" required autocomplete="email" autofocus>--}}
-                        {{--                                    @error('email')--}}
-                        {{--                                    <span class="invalid-feedback" role="alert">--}}
-                        {{--                                        <strong>{{ $message }}</strong>--}}
-                        {{--                                    </span>--}}
-                        {{--                                    @enderror--}}
-                        {{--                                </div>--}}
-                        {{--                            </div>--}}
-                        <!-- End of Form -->
+{{--                            <div class="mb-4">--}}
+{{--                                <label for="email">{{ __('E-Mail Address') }}</label>--}}
+{{--                                <div class="input-group">--}}
+{{--                                    <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{ $email ?? old('email') }}" name="email" id="email" required autocomplete="email" autofocus>--}}
+{{--                                    @error('email')--}}
+{{--                                    <span class="invalid-feedback" role="alert">--}}
+{{--                                        <strong>{{ $message }}</strong>--}}
+{{--                                    </span>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+                            <!-- End of Form -->
                             <!-- Form -->
                             <div class="mb-4">
                                 <label for="password">{{ __('Password') }}</label>
