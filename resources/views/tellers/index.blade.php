@@ -17,10 +17,10 @@
                                 <th class="border-0">ID</th>
                                 <th class="border-0">First Name</th>
                                 <th class="border-0">Last Name</th>
-                                <th class="border-0">Number Of Transactions</th>
+                                <th class="border-0">Transactions Made</th>
                                 <th class="border-0">Received Amount</th>
-                                <th class="border-0">Points Given</th>
-                                <th class="border-0">Gift Value Given</th>
+                                <th class="border-0">Points Redeemed</th>
+                                <th class="border-0">Gift Value Redeemed</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -38,10 +38,10 @@
                                         <div><span class="h6">{{$user->lastname}}</span></div>
                                     </a>
                                 </td>
-                                <td class="border-0 fw-bold">{{$user->transactions_number}}</td>
+                                <td class="border-0 fw-bold">{{$user->transactions_made}}</td>
                                 <td class="border-0 fw-bold">{{$user->received_amount}}</td>
-                                <td class="border-0 fw-bold">{{$user->points_given}}</td>
-                                <td class="border-0 fw-bold">{{$user->gift_value_given}}</td>
+                                <td class="border-0 fw-bold">{{$user->points_redeemed}}</td>
+                                <td class="border-0 fw-bold">{{$user->gift_value_redeemed}}</td>
                             </tr>
                             @endforeach
                             <!-- End of Item -->

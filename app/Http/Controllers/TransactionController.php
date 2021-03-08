@@ -62,9 +62,6 @@ class TransactionController extends Controller
             Session::flash('enough_points', 'Insufficient Points!');
             return back();
         }elseif ($userpoints>=$redeemable_points OR $userpoints == 0){
-
-
-
             $transaction = Transaction::create([
                 'user_id'=>request('customer'),
                 'firstname'=>Str::ucfirst(request('firstname')),
@@ -90,8 +87,8 @@ class TransactionController extends Controller
                 $user->points += (request('points') - request('redeemable_points'));
                 $user->gift_value += (request('gift_value') - str_replace(',', '', request('redeemable_gift_value')));
                 $user->save();
-                $teller->points_given += request('redeemable_points');
-                $teller->gift_value_given += str_replace(',', '', request('redeemable_gift_value'));
+                $teller->points_redeemed += request('redeemable_points');
+                $teller->gift_value_redeemed += str_replace(',', '', request('redeemable_gift_value'));
                 $teller->save();
             }
             else{
@@ -136,18 +133,22 @@ class TransactionController extends Controller
             'points'=> ['required'],
             'gift_value'=> ['required'],
             'teller_id'=> ['required'],
-            'redeemable_gift_value'=> ['required'],
-            'redeemable_points'=> ['required'],
             'amount_payable'=> ['required'],
+            'redeemable_gift_value'=>['sometimes'],
+            'redeemable_points'=>['sometimes']
         ]);
 
+        $user = User::find($inputs['customer']);
+        $teller = User::find(request('teller_id'));
+        $userpoints = $user->points;
         $newspend = str_replace(',','',$inputs['spending_amount']) - $transaction->spending_amount;
+        $newamountpayable = str_replace(',','',$inputs['amount_payable']) - $transaction->amount_payable;
+
         $newpoints = $inputs['points'] - $transaction->points;
         $newgift_value = $inputs['gift_value'] - $transaction->gift_value;
-        $newredeemable_gift_value = str_replace(',','',$inputs['redeemable_gift_value']) - $transaction->redeemable_gift_value;
-        $newredeemable_points = $inputs['redeemable_points'] - $transaction->redeemable_points;
 
-
+        $teller_points_redeemed = $teller->points_redeemed;
+        $teller_gift_value_redeemed = $teller->gift_value_redeemed;
         $transaction->user_id = $inputs['customer'];
         $transaction->firstname = Str::ucfirst($inputs['firstname']);
         $transaction->mode_of_payment = $inputs['mode_of_payment'];
@@ -155,9 +156,10 @@ class TransactionController extends Controller
         $transaction->points = $inputs['points'];
         $transaction->gift_value = $inputs['gift_value'];
         $transaction->teller_id = $inputs['teller_id'];
-        $transaction->redeemable_gift_value = str_replace(',', '', $inputs['redeemable_gift_value']);
-        $transaction->redeemable_points = $inputs['redeemable_points'];
         $transaction->amount_payable = str_replace(',', '', $inputs['amount_payable']);
+        $user->spending_amount += $newspend;
+        $teller->received_amount += $newamountpayable;
+
 
         if($transaction->isDirty('customer') OR
             $transaction->isDirty('firstname') OR
@@ -171,20 +173,43 @@ class TransactionController extends Controller
             $transaction->isDirty('amount_payable')
 
         ){
-            $transaction->update();
+            $redeemable_points = $inputs['redeemable_points'];
+            if ($userpoints<$redeemable_points){
+                Session::flash('enough_points', 'Insufficient Points!');
+                return back();
+            }
+            elseif ($userpoints>=$redeemable_points OR $userpoints == 0){
+                if (!empty(request()->redeemable_gift_value)){
+                    $newredeemable_gift_value = str_replace(',','',$inputs['redeemable_gift_value']) - $transaction->redeemable_gift_value;
+                    $newredeemable_points = $inputs['redeemable_points'] - $transaction->redeemable_points;
 
-            $user = User::find($inputs['customer']);
+                    $transaction->redeemable_gift_value = str_replace(',', '', $inputs['redeemable_gift_value']);
+                    $transaction->redeemable_points = $inputs['redeemable_points'];
+                    $transaction->update();
 
-            $user->spending_amount += $newspend;
-            $user->points += $newpoints - $newredeemable_points;
-            $user->gift_value += $newgift_value - $newredeemable_gift_value;
+                    $user->points += $newpoints - $newredeemable_points;
+                    $user->gift_value += $newgift_value - $newredeemable_gift_value;
+                    $user->save();
+                    $teller->points_redeemed += $newredeemable_points;
+                    $teller->gift_value_redeemed += $newredeemable_gift_value;
+                    $teller->save();
+                    Session::flash('updated_transaction', 'Transaction was successfully updated!');
+                    return back();
+                }
+                else{
+                    $transaction->update();
+                    $user->points += $newpoints;
+                    $user->gift_value += $newgift_value;
+                    $user->save();
+                    $teller->points_redeemed += $newpoints;
+                    $teller->gift_value_redeemed += $newgift_value;
+                    $teller->save();
+                    Session::flash('updated_transaction', 'Transaction was successfully updated!');
+                    return back();
+                }
+            }
 
-
-            $user->save();
-            Session::flash('updated_transaction', 'Transaction was successfully updated!');
-            return back();
         }
-
         if($transaction->isClean('customer') OR
             $transaction->isClean('firstname') OR
             $transaction->isClean('mode_payment') OR
@@ -200,6 +225,8 @@ class TransactionController extends Controller
             session()->flash('updated_not','No changes made!');
             return back();
         }
+        return back();
+
     }
 
 }

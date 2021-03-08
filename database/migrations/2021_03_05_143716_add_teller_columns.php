@@ -16,8 +16,8 @@ class AddTellerColumns extends Migration
         Schema::table('users', function (Blueprint $table) {
             //
             $table->integer('transactions_made')->nullable();
-            $table->integer('points_given')->nullable();
-            $table->integer('gift_value_given')->nullable();
+            $table->integer('points_redeemed')->nullable();
+            $table->integer('gift_value_redeemed')->nullable();
         });
     }
 

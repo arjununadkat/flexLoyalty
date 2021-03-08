@@ -151,7 +151,7 @@
                                    name="redeemable_gift_value"
                                    id="redeemable_gift_value"
                                    value="{{$transaction->redeemable_gift_value}}"
-                                   required>
+                                   >
                             <small id="redeemable_gift_valueHelp" class="form-text text-muted">Please input the gift value</small>
                             @error('redeemable_gift_value')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -166,7 +166,7 @@
                                    name="redeemable_points"
                                    id="redeemable_points"
                                    value="{{$transaction->redeemable_points}}"
-                                   required>
+                                   >
                             <small id="redeemable_pointsHelp" class="form-text text-muted">This is the points redeemable</small>
                             @error('redeemable_points')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -187,6 +187,7 @@
             </form>
         </div>
         <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
+        <button hidden id="showmd2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-warning">show</button>
         <x-modal.Amodal-master>
             @section('header')
                 Transaction has been updated
@@ -214,12 +215,24 @@
             @endsection
 
         </x-modal.Dmodal-master>
+                <x-modal.Wmodal-master>
+                    @section('Wheader')
+                        Not Enough Points!
+                    @endsection
+                    @section('Wparagraph')
+                        You cannot perform this transaction because the customer has insufficient points
+                    @endsection
+
+                </x-modal.Wmodal-master>
     @endsection
 
     @section('scripts')
         <script>
             @if(\Illuminate\Support\Facades\Session::has('updated_transaction'))
             document.getElementById('showmd').click();
+            @endif
+            @if(\Illuminate\Support\Facades\Session::has('enough_points'))
+            document.getElementById('showmd2').click();
             @endif
         </script>
         <script>
