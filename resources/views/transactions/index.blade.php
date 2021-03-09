@@ -82,6 +82,7 @@
                 </div>
             </div>
         </div>
+            <button hidden id="showmd2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
             <x-modal.Dmodal-master>
                 @section('Dheader')
                     You are about to delete a transaction
@@ -97,10 +98,24 @@
                 @endsection
 
             </x-modal.Dmodal-master>
+            <x-modal.Amodal-master>
+                @section('header')
+                    Transaction has been deleted
+                @endsection
+                @section('paragraph')
+                    Well Done! You have successfully deleted the Transaction!
+                @endsection
+                @section('route')
+                    onclick="location.href='{{ route('dashboard.index') }}'"
+                @endsection
+            </x-modal.Amodal-master>
      @endsection
 
     @section('scripts')
         <script>
+            @if(\Illuminate\Support\Facades\Session::has('transaction_deleted'))
+            document.getElementById('showmd2').click();
+            @endif
 
             $('#deletemodal').on('show.bs.modal', function (event){
                 var button = $(event.relatedTarget);

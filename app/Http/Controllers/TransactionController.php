@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -110,6 +111,33 @@ class TransactionController extends Controller
     }
 
     public function destroy(Request $request){
+
+        $val = $request->transaction_id;
+
+
+
+        $transaction = Transaction::where('id',$val)->first();
+        $customer = User::where('id',$transaction->user_id)->first();
+        $teller = User::where('id',$transaction->teller_id)->first();
+
+        $customer->spending_amount -=$transaction->spending_amount;
+        $customer->points -=$transaction->points;
+        $customer->gift_value -=$transaction->gift_value;
+        $customer->transactions_number -= 1;
+
+        $teller->received_amount -=$transaction->amount_payable;
+        $teller->transactions_made -= 1;
+
+        if (!is_null($transaction->redeemable_points)){
+
+            $teller->points_redeemed -= $transaction->redeemable_points;
+            $teller->gift_value_redeemed -= $transaction->redeemable_gift_value;
+            $customer->points +=$transaction->redeemable_points;
+            $customer->gift_value +=$transaction->redeemable_gift_value;
+        }
+
+        $customer->save();
+        $teller->save();
 
         Transaction::destroy($request->transaction_id);
         session()->flash('transaction_deleted', 'The transaction has been deleted');
