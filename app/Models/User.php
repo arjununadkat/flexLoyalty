@@ -75,19 +75,39 @@ class User extends Authenticatable
 
     }
 
-    public function userHasRole($role_name){
+    public function userAnyRole($roles){
 
-        foreach ($this->roles as $role){
-            if(Str::lower($role_name)==Str::lower($role->name))
+        if(is_array($roles)){
+            foreach ($roles as $role){
+                if($this->hasRole($role)){
+                    return true;
+                }
+            }
+        }else{
+            if($this->hasRole($roles)){
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasRole($role)
+    {
+        if($this->roles()->where('name',$role)->first()){
+            return true;
         }
         return false;
     }
+
+
 
     public function transactions(){
 
         return $this->hasMany(Transaction::class);
     }
+
+
 
 
 }

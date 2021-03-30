@@ -17,8 +17,10 @@
                             <th class="border-0">ID</th>
                             <th class="border-0">First Name</th>
                             <th class="border-0">Last Name</th>
+                            @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
                             <th class="border-0">Number Of Transactions</th>
                             <th class="border-0">Spending Amount</th>
+                            @endif
                             <th class="border-0">Points</th>
                             <th class="border-0">Gift Value</th>
                         </tr>
@@ -26,7 +28,7 @@
                         <tbody>
                         <!-- Item -->
                         @foreach($users as $user)
-                            <tr onclick="window.location='{{route('user.profile.show', $user->id)}}';">
+                            <tr>
                                 <td class="border-0 fw-bold">{{$user->id}}</td>
                                 <td class="border-0">
                                     <a href="{{route('user.profile.show', $user->id)}}" class="d-flex align-items-center">
@@ -38,8 +40,14 @@
                                         <div><span class="h6">{{$user->lastname}}</span></div>
                                     </a>
                                 </td>
-                                <td class="border-0 fw-bold">{{$user->transactions_number}}</td>
+                                @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
+                                <td class="border-0">
+                                    <a href="{{route('user.transactions', $user->id)}}" class="d-flex align-items-center">
+                                        <div><span class="h6">{{$user->transactions_number}}</span></div>
+                                    </a>
+                                </td>
                                 <td class="border-0 fw-bold">{{$user->spending_amount}}</td>
+                                @endif
                                 <td class="border-0 fw-bold">{{$user->points}}</td>
                                 <td class="border-0 fw-bold">{{$user->gift_value}}</td>
                             </tr>

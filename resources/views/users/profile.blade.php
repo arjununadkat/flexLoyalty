@@ -24,7 +24,7 @@
                                id="username"
                                value="{{$user->username}}"
                                required>
-                        <small id="usernameHelp" class="form-text text-muted">This is your Username</small>
+                        <small id="usernameHelp" class="form-text text-muted">This is the Username</small>
                         @error('username')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -37,7 +37,7 @@
                                id="firstname"
                                value="{{$user->firstname}}"
                                required>
-                        <small id="first_nameHelp" class="form-text text-muted">This is your First Name</small>
+                        <small id="first_nameHelp" class="form-text text-muted">This is the First Name</small>
                         @error('firstname')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -50,7 +50,7 @@
                                id="lastname"
                                value="{{$user->lastname}}"
                                required>
-                        <small id="last_nameHelp" class="form-text text-muted">This is your Last Name</small>
+                        <small id="last_nameHelp" class="form-text text-muted">This is the Last Name</small>
                         @error('lastname')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -63,7 +63,7 @@
                                id="email"
                                value="{{$user->email}}"
                                required>
-                        <small id="minimum_spendingHelp" class="form-text text-muted">This is your Email Address</small>
+                        <small id="minimum_spendingHelp" class="form-text text-muted">This is the Email Address</small>
                         @error('email')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -92,7 +92,7 @@
                                 @endif
                             >Other</option>
                         </select>
-                        <small id="genderHelp" class="form-text text-muted">This is your Gender</small>
+                        <small id="genderHelp" class="form-text text-muted">This is the Gender</small>
                         @error('gender')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -105,7 +105,7 @@
                                id="address"
                                value="{{$user->address}}"
                                required>
-                        <small id="addressHelp" class="form-text text-muted">This is your Address</small>
+                        <small id="addressHelp" class="form-text text-muted">This is the Address</small>
                         @error('address')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -134,9 +134,12 @@
 {{--                        <div class="alert alert-danger">{{ $message }}</div>--}}
 {{--                        @enderror--}}
 {{--                    </div>--}}
+                    @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
                     <button class="btn btn-primary">Update</button>
+                    @endif
                 </form>
             </div>
+            @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
             <div class="col-sm-6">
                 <div class="card border-light shadow-sm">
                     <div class="card-body">
@@ -184,6 +187,7 @@
                 </div>
 
             </div>
+            @endif
                 <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>
                 <x-modal.Amodal-master>
                     @section('header')

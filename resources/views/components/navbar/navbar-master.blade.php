@@ -7,13 +7,17 @@
             <li role="separator" class="dropdown-divider mt-4 mb-3 border-black"></li>
             <x-navbar.links.navbar-links-transactions></x-navbar.links.navbar-links-transactions>
             <li role="separator" class="dropdown-divider mt-4 mb-3 border-black"></li>
+
             <x-navbar.links.navbar-links-tellers></x-navbar.links.navbar-links-tellers>
             <li role="separator" class="dropdown-divider mt-4 mb-3 border-black"></li>
+
             <x-navbar.links.navbar-links-customers></x-navbar.links.navbar-links-customers>
             <li role="separator" class="dropdown-divider mt-4 mb-3 border-black"></li>
+            @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
             <x-navbar.links.navbar-links-users></x-navbar.links.navbar-links-users>
             <li role="separator" class="dropdown-divider mt-4 mb-3 border-black"></li>
             <x-navbar.links.navbar-links-project></x-navbar.links.navbar-links-project>
+            @endif
         </ul>
     </div>
 </nav>

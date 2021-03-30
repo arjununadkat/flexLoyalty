@@ -11,11 +11,13 @@
     <div class="multi-level collapse "
          role="list" id="submenu-user" aria-expanded="false">
         <ul class="flex-column nav">
-            <li class="nav-item ">
-                <a class="nav-link" href="{{route('users.create')}}">
-                    <span class="sidebar-text">Create New User</span>
-                </a>
-            </li>
+            @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{route('users.create')}}">
+                        <span class="sidebar-text">Create New User</span>
+                    </a>
+                </li>
+            @endif
             <li class="nav-item ">
                 <a class="nav-link" href="{{route('users.index')}}">
                     <span class="sidebar-text">View All Users</span>

@@ -11,11 +11,13 @@
     <div class="multi-level collapse "
          role="list" id="submenu-cust" aria-expanded="false">
         <ul class="flex-column nav">
+            @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
             <li class="nav-item ">
                 <a class="nav-link" href="{{route('customers.create')}}">
                     <span class="sidebar-text">Create New Customer</span>
                 </a>
             </li>
+            @endif
             <li class="nav-item ">
                 <a class="nav-link" href="{{route('customers.index')}}">
                     <span class="sidebar-text">View All Customers</span>

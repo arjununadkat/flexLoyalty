@@ -26,7 +26,7 @@
                             <tbody>
                             <!-- Item -->
                             @foreach($users as $user)
-                            <tr onclick="window.location='{{route('user.profile.show', $user->id)}}';">
+                            <tr>
                                 <td class="border-0 fw-bold">{{$user->id}}</td>
                                 <td class="border-0">
                                     <a href="{{route('user.profile.show', $user->id)}}" class="d-flex align-items-center">
@@ -38,7 +38,12 @@
                                         <div><span class="h6">{{$user->lastname}}</span></div>
                                     </a>
                                 </td>
-                                <td class="border-0 fw-bold">{{$user->transactions_made}}</td>
+                                <td class="border-0">
+                                    <a href="{{route('teller.transactions', $user->id)}}" class="d-flex align-items-center">
+                                        <div><span class="h6">{{$user->transactions_made}}</span></div>
+                                    </a>
+                                </td>
+{{--                                <td class="border-0 fw-bold">{{$user->transactions_made}}</td>--}}
                                 <td class="border-0 fw-bold">{{$user->received_amount}}</td>
                                 <td class="border-0 fw-bold">{{$user->points_redeemed}}</td>
                                 <td class="border-0 fw-bold">{{$user->gift_value_redeemed}}</td>

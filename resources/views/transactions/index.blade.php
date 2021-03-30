@@ -31,7 +31,7 @@
                         @foreach($transactions as $transaction)
                             <tr>
                                 <td class="border-0">
-                                    <a href="{{route('transaction.show', $transaction->id)}}" class="d-flex align-items-center">
+                                    <a href="{{route('transaction.show', base64_encode($transaction->id))}}" class="d-flex align-items-center">
                                         <div><span class="h6">{{$transaction->id}}</span></div>
                                     </a>
                                 </td>

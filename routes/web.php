@@ -68,9 +68,10 @@ Route::middleware('auth')->group(function (){
     Route::post('/transaction',[TransactionController::class, 'store'])->name('transactions.store');
     Route::delete('/transaction/{transaction}/destroy',[TransactionController::class, 'destroy'])->name('transaction.destroy');
     Route::get('/transaction/fetch_customer',[TransactionController::class, 'fetchCustomer'])->name('transactions.fetch');
-    Route::get('/transaction/{transaction}/show', [TransactionController::class, 'show'])->name('transaction.show');
+    Route::get('/transaction/{id}/show', [TransactionController::class, 'show'])->name('transaction.show');
     Route::put('/transaction/{transaction}/update', [TransactionController::class, 'update'])->name('transaction.update');
     Route::get('/transactions/{user}', [TransactionController::class, 'userShow'])->name('user.transactions');
+    Route::get('/transactions/{user}/teller', [TransactionController::class, 'tellerShow'])->name('teller.transactions');
 
     Route::put('/user/check', [UserController::class, 'checkReset'])->name('check.reset');
 

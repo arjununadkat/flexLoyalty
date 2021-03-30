@@ -11,14 +11,22 @@
     <div class="multi-level collapse "
          role="list" id="submenu-tells" aria-expanded="false">
         <ul class="flex-column nav">
+            @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
             <li class="nav-item ">
                 <a class="nav-link" href="{{route('tellers.create')}}">
                     <span class="sidebar-text">Create New Teller</span>
                 </a>
             </li>
+
             <li class="nav-item ">
                 <a class="nav-link" href="{{route('tellers.index')}}">
                     <span class="sidebar-text">View All Tellers</span>
+                </a>
+            </li>
+            @endif
+            <li class="nav-item ">
+                <a class="nav-link" href="{{route('teller.transactions', auth()->user()->id)}}">
+                    <span class="sidebar-text">Teller Transactions</span>
                 </a>
             </li>
         </ul>

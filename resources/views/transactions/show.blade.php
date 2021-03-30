@@ -174,11 +174,13 @@
                         </div>
                     </div>
                 </div>
+                @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
                 <button class="btn btn-primary">Update</button>
                 <button type="button" id="deletebutton" class="btn btn-danger delete"
                         data-toggle="modal"
                         data-transaction_id='{{$transaction->id}}'
                         data-target="#deletemodal">Delete</button>
+                @endif
                 <input hidden type="number" id="teller_id" name="teller_id" value="{{auth()->user()->id}}">
                 <input hidden type="number" id="constant" name="constant" value="{{$project->constant}}">
                 <input hidden type="number" id="benefit_value" name="benefit_value" value="{{$project->benefit_value}}">

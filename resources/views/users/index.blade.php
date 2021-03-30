@@ -21,7 +21,9 @@
                             <th class="border-0">Spending Amount</th>
                             <th class="border-0">Points</th>
                             <th class="border-0">Gift Value</th>
+                            @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
                             <th class="border-0">Delete</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -48,12 +50,14 @@
                                 <td class="border-0 fw-bold">{{$user->spending_amount}}</td>
                                 <td class="border-0 fw-bold">{{$user->points}}</td>
                                 <td class="border-0 fw-bold">{{$user->gift_value}}</td>
+                                @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
                                 <td>
                                         <button type="button" id="deletebutton" class="btn btn-danger delete"
                                                 data-toggle="modal"
                                                 data-user_id='{{$user->id}}'
                                                 data-target="#deletemodal">Delete</button>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                         <!-- End of Item -->
