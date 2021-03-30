@@ -28,6 +28,14 @@ class ProjectController extends Controller
 
     }
 
+    public function show(){
+
+        $projects = Project::all();
+        return view('projects.show', [
+            'projects'=>$projects
+        ]);
+    }
+
     public function store(){
 
         if(Gate::denies('isAdmin')){

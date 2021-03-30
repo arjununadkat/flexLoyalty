@@ -23,7 +23,9 @@
                             <th class="border-0">Points Redeemed</th>
                             <th class="border-0">Teller ID</th>
                             <th class="border-0">Transaction Time</th>
+                            @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
                             <th class="border-0">Delete</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -68,12 +70,14 @@
                                         <div><span class="h6">{{$transaction->updated_at}}</span></div>
                                     </a>
                                 </td>
+                                @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
                                 <td>
                                     <button type="button" id="deletebutton" class="btn btn-danger delete"
                                             data-toggle="modal"
                                             data-transaction_id='{{$transaction->id}}'
                                             data-target="#deletemodal">Delete</button>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                         <!-- End of Item -->

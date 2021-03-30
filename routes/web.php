@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function (){
 
     Route::get('/project', [ProjectController::class, 'index'])->name('project.index');
     Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
+    Route::get('/projects', [ProjectController::class, 'show'])->name('projects.show');
 
     Route::get('/user/{user}/profile', [UserController::class, 'show'])->name('user.profile.show');
     Route::put('/user/{user}/update', [UserController::class, 'update'])->name('user.profile.update');
@@ -74,6 +75,7 @@ Route::middleware('auth')->group(function (){
     Route::get('/transactions/{user}/teller', [TransactionController::class, 'tellerShow'])->name('teller.transactions');
 
     Route::put('/user/check', [UserController::class, 'checkReset'])->name('check.reset');
+    Route::delete('/logout',[UserController::class, 'logout'])->name('logout');
 
 
 });

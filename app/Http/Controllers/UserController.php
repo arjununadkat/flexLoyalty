@@ -16,6 +16,13 @@ class UserController extends Controller
 {
     //
 
+    public function logout () {
+        //logout user
+        auth()->logout();
+        // redirect to homepage
+        return redirect('/');
+    }
+
     public function show(User $user){
 
         return view('users.profile', [

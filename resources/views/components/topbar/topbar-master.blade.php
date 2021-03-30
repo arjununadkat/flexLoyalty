@@ -23,14 +23,32 @@
                     </a>
                     <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-0">
                         <a class="dropdown-item rounded-top fw-bold" href="{{route('user.profile.show', auth()->user())}}"><span class="far fa-user-circle"></span>My Profile</a>
-                        <a class="dropdown-item fw-bold" href="#"><span class="fas fa-cog"></span>Settings</a>
-                        <a class="dropdown-item fw-bold" href="#"><span class="fas fa-envelope-open-text"></span>Messages</a>
-                        <a class="dropdown-item fw-bold" href="#"><span class="fas fa-user-shield"></span>Support</a>
+                        @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
+                        <a class="dropdown-item fw-bold" href="{{route('project.index')}}"><span class="fas fa-cog"></span>Project Settings</a>
+                        @endif
                         <div role="separator" class="dropdown-divider my-0"></div>
-                        <a class="dropdown-item rounded-bottom fw-bold" href="/logout"><span class="fas fa-sign-out-alt text-danger"></span>Logout</a>
+                        <button type="button" id="logoutbutton" class="btn btn-danger delete"
+                                data-toggle="modal"
+                                data-target="#deletemodal">Logout</button>
+{{--                        <a class="dropdown-item rounded-bottom fw-bold" href="/logout" ><span class="fas fa-sign-out-alt text-danger" data-toggle="modal" data-target="#deletemodal"></span>Logout</a>--}}
                     </div>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+<x-modal.Dmodal-master>
+    @section('Dheader')
+        You are about to logout of the system
+    @endsection
+    @section('Dparagraph')
+        Are you sure you want to Log out?
+    @endsection
+    @section('Daction')
+            action="{{route('logout')}}"
+    @endsection
+    @section('Dinput')
+
+    @endsection
+
+</x-modal.Dmodal-master>
