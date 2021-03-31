@@ -3,7 +3,7 @@
             class="nav-link  collapsed  d-flex justify-content-between align-items-center"
             data-bs-toggle="collapse" data-bs-target="#submenu-trans">
           <span>
-            <span class="sidebar-icon"><span class="fas fa-table"></span></span>
+            <span class="sidebar-icon"><span class="fas fa-money-bill-wave"></span></span>
             <span class="sidebar-text">Transactions</span>
           </span>
           <span class="link-arrow"><span class="fas fa-chevron-right"></span></span>

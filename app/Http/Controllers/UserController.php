@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Nexmo\Laravel\Facade\Nexmo;
 use PhpParser\Node\Expr\Cast\Int_;
 use Illuminate\Support\Facades\Gate;
 
@@ -66,6 +67,7 @@ class UserController extends Controller
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'email', 'max:255', 'unique:users'],
+                'phone_number' => ['required', 'digits:9', 'unique:users'],
                 'gender' => ['required', 'notIn:0'],
                 'password' => ['confirmed'],
                 'address' => ['required', 'string', 'max:255'],
@@ -74,11 +76,14 @@ class UserController extends Controller
                 'role3' => ['sometimes'],
             ]);
             $current = Carbon::now();
+            $country_code = '+255';
+            $phone_number = $country_code.request('phone_number');
             $user = User::create([
                 'username' => request('username'),
                 'firstname' => Str::ucfirst(request('firstname')),
                 'lastname' => Str::ucfirst(request('lastname')),
                 'email' => request('email'),
+                'phone_number' => $phone_number,
                 'gender' => request('gender'),
                 'password' => Hash::make(request('password')),
                 'address' => Str::ucfirst(request('address')),
@@ -97,6 +102,12 @@ class UserController extends Controller
             $expiresAt = now()->addMinutes(5);
 
             $user->sendWelcomeNotification($expiresAt);
+
+            Nexmo::message()->send([
+                'to'   => $phone_number,
+                'from' => '+255767887898',
+                'text' => 'Thank you for joining the Fléx loyalty program!'
+            ]);
             return back();
         }
 

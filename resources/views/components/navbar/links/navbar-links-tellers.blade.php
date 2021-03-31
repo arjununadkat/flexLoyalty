@@ -3,7 +3,8 @@
             class="nav-link  collapsed  d-flex justify-content-between align-items-center"
             data-bs-toggle="collapse" data-bs-target="#submenu-tells">
           <span>
-            <span class="sidebar-icon"><span class="fas fa-table"></span></span>
+            <span class="sidebar-icon"><span class="fas fa-cash-register"></span></span>
+
             <span class="sidebar-text">Tellers</span>
           </span>
           <span class="link-arrow"><span class="fas fa-chevron-right"></span></span>

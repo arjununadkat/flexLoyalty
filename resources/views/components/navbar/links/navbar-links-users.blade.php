@@ -3,7 +3,8 @@
             class="nav-link  collapsed  d-flex justify-content-between align-items-center"
             data-bs-toggle="collapse" data-bs-target="#submenu-user">
           <span>
-            <span class="sidebar-icon"><span class="fas fa-table"></span></span>
+            <span class="sidebar-icon"><span class="fas fa-user-circle"></span></span>
+
             <span class="sidebar-text">Users</span>
           </span>
           <span class="link-arrow"><span class="fas fa-chevron-right"></span></span>

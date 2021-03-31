@@ -68,6 +68,40 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label for="country_code">Country Code</label>
+                            <input readonly
+                                   type="number"
+                                   class="form-control @error('country_code') is-invalid @enderror"
+                                   name="country_code"
+                                   id="country_code"
+                                   value="+255"
+                                   placeholder="+255"
+                                   required>
+{{--                            <small id="minimum_spendingHelp" class="form-text text-muted">Please enter their Phone Number</small>--}}
+                            @error('country_code')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="mb-3">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="number"
+                                   class="form-control @error('phone_number') is-invalid @enderror"
+                                   name="phone_number"
+                                   id="phone_number"
+                                   required>
+                            <small id="phone_numberHelp" class="form-text text-muted">Please enter their Phone Number</small>
+                            @error('phone_number')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mb-3">
                     <label for="gender">Gender</label>
                     <select class="form-select @error('gender') is-invalid @enderror" id="gender" name="gender" aria-label="Default select example">
@@ -178,7 +212,7 @@
                 Well Done! You have successfully created a User!
             @endsection
             @section('route')
-                onclick="location.href='{{ route('dashboard.index') }}'"
+                onclick="location.href='{{ route('users.create') }}'"
             @endsection
         </x-modal.Amodal-master>
     @endsection
