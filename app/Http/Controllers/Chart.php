@@ -15,6 +15,8 @@ class Chart extends Controller
     public function index()
     {
 
+
+
         $users = User::select(DB::raw("COUNT(*) as count"))
             ->whereYear('created_at', date('Y'))
             ->groupBy(DB::raw("Month(created_at)"))
@@ -31,9 +33,26 @@ class Chart extends Controller
             $items[$month - 1]=$users[$index];
         }
 
+        $user = User::whereHas(
+            'roles', function($q){
+            $q->where('name', 'Customer');
+        }
+        )->get();
+        $customers = $user->count();
+
+        $user2 = User::whereHas(
+            'roles', function($q){
+            $q->where('name', 'Teller');
+        }
+        )->get();
+
+        $tellers = $user2->count();
+        $user3 = User::all();
+
+        $userss = $user3->count();
 
 
-        return view('index', compact('items'));
+        return view('index', compact('items'))->with('customers', $customers)->with('tellers', $tellers)->with('userss',$userss);
     }
 
 }

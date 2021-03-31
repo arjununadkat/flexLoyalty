@@ -41,32 +41,32 @@
                                 <td class="border-0 fw-bold">{{$transaction->firstname}}</td>
 {{--                                onclick="window.location='{{route('user.profile.show', $user->id)}}';"--}}
                                 <td class="border-0">
-                                    <a href="{{route('transaction.show', $transaction->id)}}" class="d-flex align-items-center">
+                                    <a href="{{route('transaction.show', base64_encode($transaction->id))}}" class="d-flex align-items-center">
                                         <div><span class="h6">{{$transaction->mode_of_payment}}</span></div>
                                     </a>
                                 </td>
                                 <td class="border-0">
-                                    <a href="{{route('transaction.show', $transaction->id)}}" class="d-flex align-items-center">
+                                    <a href="{{route('transaction.show', base64_encode($transaction->id))}}" class="d-flex align-items-center">
                                         <div><span class="h6">{{$transaction->spending_amount}}</span></div>
                                     </a>
                                 </td>
                                 <td class="border-0">
-                                    <a href="{{route('transaction.show', $transaction->id)}}" class="d-flex align-items-center">
+                                    <a href="{{route('transaction.show', base64_encode($transaction->id))}}" class="d-flex align-items-center">
                                         <div><span class="h6">{{$transaction->points}}</span></div>
                                     </a>
                                 </td>
                                 <td class="border-0">
-                                    <a href="{{route('transaction.show', $transaction->id)}}" class="d-flex align-items-center">
+                                    <a href="{{route('transaction.show', base64_encode($transaction->id))}}" class="d-flex align-items-center">
                                         <div><span class="h6">{{$transaction->redeemable_points}}</span></div>
                                     </a>
                                 </td>
                                 <td class="border-0">
-                                    <a href="{{route('transaction.show', $transaction->id)}}" class="d-flex align-items-center">
+                                    <a href="{{route('transaction.show', base64_encode($transaction->id))}}" class="d-flex align-items-center">
                                         <div><span class="h6">{{$transaction->teller_id}}</span></div>
                                     </a>
                                 </td>
                                 <td class="border-0">
-                                    <a href="{{route('transaction.show', $transaction->id)}}" class="d-flex align-items-center">
+                                    <a href="{{route('transaction.show', base64_encode($transaction->id))}}" class="d-flex align-items-center">
                                         <div><span class="h6">{{$transaction->updated_at}}</span></div>
                                     </a>
                                 </td>
@@ -110,7 +110,7 @@
                     Well Done! You have successfully deleted the Transaction!
                 @endsection
                 @section('route')
-                    onclick="location.href='{{ route('dashboard.index') }}'"
+                    onclick="location.href='{{ route('transactions.index') }}'"
                 @endsection
             </x-modal.Amodal-master>
      @endsection

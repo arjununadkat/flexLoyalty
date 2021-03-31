@@ -129,7 +129,7 @@
                 Well Done! You have successfully created a Customer!
             @endsection
             @section('route')
-                onclick="location.href='{{ route('dashboard.index') }}'"
+                onclick="location.href='{{ route('customers.create') }}'"
             @endsection
         </x-modal.Amodal-master>
     @endsection

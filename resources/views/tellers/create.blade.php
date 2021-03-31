@@ -129,7 +129,7 @@
                     Well Done! You have successfully created a Teller!
                 @endsection
                 @section('route')
-                    onclick="location.href='{{ route('dashboard.index') }}'"
+                    onclick="location.href='{{ route('tellers.create') }}'"
                 @endsection
             </x-modal.Amodal-master>
     @endsection

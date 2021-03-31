@@ -197,7 +197,7 @@
                 Well Done! You have successfully created a Transaction!
             @endsection
             @section('route')
-                onclick="location.href='{{ route('dashboard.index') }}'"
+                onclick="location.href='{{ route('transactions.create') }}'"
             @endsection
         </x-modal.Amodal-master>
         <x-modal.Wmodal-master>

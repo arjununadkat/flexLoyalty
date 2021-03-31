@@ -24,10 +24,13 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function show(User $user){
+    public function show($user){
+
+        $id = base64_decode($user);
+        $user_data = User::find($id);
 
         return view('users.profile', [
-            'user'=>$user,
+            'user'=>$user_data,
             'roles'=>Role::all(),
         ]);
     }
