@@ -68,18 +68,66 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label for="gender">Gender</label>
-                    <select class="form-select @error('gender') is-invalid @enderror" id="gender" name="gender" aria-label="Default select example">
-                        <option value="0" selected>Please select one</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <small id="genderHelp" class="form-text text-muted">Please select their gender</small>
-                    @error('gender')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label for="country_code">Country Code</label>
+                            <input readonly
+                                   type="number"
+                                   class="form-control @error('country_code') is-invalid @enderror"
+                                   name="country_code"
+                                   id="country_code"
+                                   value="+255"
+                                   placeholder="+255"
+                                   required>
+                            {{--                            <small id="minimum_spendingHelp" class="form-text text-muted">Please enter their Phone Number</small>--}}
+                            @error('country_code')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="mb-3">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="number"
+                                   class="form-control @error('phone_number') is-invalid @enderror"
+                                   name="phone_number"
+                                   id="phone_number"
+                                   required>
+                            <small id="phone_numberHelp" class="form-text text-muted">Please enter their Phone Number</small>
+                            @error('phone_number')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="gender">Gender</label>
+                            <select class="form-select @error('gender') is-invalid @enderror" id="gender" name="gender" aria-label="Default select example">
+                                <option value="0" selected>Please select one</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <small id="genderHelp" class="form-text text-muted">Please select their gender</small>
+                            @error('gender')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="birthday">Date Of Birth</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><span class="far fa-calendar-alt"></span></span>
+                                <input data-datepicker="" class="form-control" id="birthday" name="birthday" type="text" placeholder="dd/mm/yyyy" required>
+
+                            </div>
+                            <small id="birthdayHelp" class="form-text text-muted">Please enter their date of birth</small>
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="address">Address</label>

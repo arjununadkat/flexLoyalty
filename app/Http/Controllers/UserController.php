@@ -72,6 +72,7 @@ class UserController extends Controller
                 'email' => ['required', 'email', 'max:255', 'unique:users'],
                 'phone_number' => ['required', 'digits:9', 'unique:users'],
                 'gender' => ['required', 'notIn:0'],
+                'birthday'=> ['required'],
                 'password' => ['confirmed'],
                 'address' => ['required', 'string', 'max:255'],
                 'role1' => ['required', 'in:1,2,3'],
@@ -88,6 +89,7 @@ class UserController extends Controller
                 'email' => request('email'),
                 'phone_number' => $phone_number,
                 'gender' => request('gender'),
+                'date_of_birth' => date("Y-m-d", strtotime(request('birthday'))),
                 'password' => Hash::make(request('password')),
                 'address' => Str::ucfirst(request('address')),
                 'reset_at' => $current->addDays(365),
@@ -152,17 +154,23 @@ class UserController extends Controller
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'email', 'max:255', 'unique:users'],
+                'phone_number' => ['required', 'digits:9', 'unique:users'],
+                'birthday'=> ['required'],
                 'gender' => ['required', 'notIn:0'],
                 'password' => ['confirmed'],
                 'address' => ['required', 'string', 'max:255'],
             ]);
             $current = Carbon::now();
+            $country_code = '+255';
+            $phone_number = $country_code.request('phone_number');
             $user = User::create([
                 'username' => request('username'),
                 'firstname' => Str::ucfirst(request('firstname')),
                 'lastname' => Str::ucfirst(request('lastname')),
                 'email' => request('email'),
+                'phone_number' => $phone_number,
                 'gender' => request('gender'),
+                'date_of_birth' => date("Y-m-d", strtotime(request('birthday'))),
                 'password' => Hash::make(request('password')),
                 'address' => Str::ucfirst(request('address')),
                 'reset_at' => $current->addDays(365),
@@ -170,6 +178,15 @@ class UserController extends Controller
             ]);
             $user->roles()->attach('2');
             Session::flash('created_teller', 'Teller was Successfully Created');
+            $expiresAt = now()->addMinutes(5);
+
+            $user->sendWelcomeNotification($expiresAt);
+
+            Nexmo::message()->send([
+                'to'   => $phone_number,
+                'from' => '+255767887898',
+                'text' => 'Thank you for joining the Fléx loyalty program!'
+            ]);
             return back();
         }
     }
@@ -194,17 +211,23 @@ class UserController extends Controller
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'email', 'max:255', 'unique:users'],
+                'phone_number' => ['required', 'digits:9', 'unique:users'],
+                'birthday'=> ['required'],
                 'gender' => ['required', 'notIn:0'],
                 'password' => ['confirmed'],
                 'address' => ['required', 'string', 'max:255'],
             ]);
             $current = Carbon::now();
+            $country_code = '+255';
+            $phone_number = $country_code.request('phone_number');
             $user = User::create([
                 'username' => request('username'),
                 'firstname' => Str::ucfirst(request('firstname')),
                 'lastname' => Str::ucfirst(request('lastname')),
                 'email' => request('email'),
+                'phone_number' => $phone_number,
                 'gender' => request('gender'),
+                'date_of_birth' => date("Y-m-d", strtotime(request('birthday'))),
                 'password' => Hash::make(request('password')),
                 'address' => Str::ucfirst(request('address')),
                 'reset_at' => $current->addDays(365),
@@ -212,6 +235,15 @@ class UserController extends Controller
             ]);
             $user->roles()->attach('3');
             Session::flash('created_customer', 'Customer was Successfully Created');
+            $expiresAt = now()->addMinutes(5);
+
+            $user->sendWelcomeNotification($expiresAt);
+
+            Nexmo::message()->send([
+                'to'   => $phone_number,
+                'from' => '+255767887898',
+                'text' => 'Thank you for joining the Fléx loyalty program!'
+            ]);
             return back();
         }
     }
