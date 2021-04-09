@@ -23,7 +23,7 @@
                             <div class="col-12 col-xl-7 px-xl-0">
                                 <div class="d-none d-sm-block">
                                     <h2 class="h5 text-center">Number of Customers</h2>
-                                    <h3 class="mb-1 text-center" id="customer_number"></h3>
+                                    <a href="{{route('customers.index')}}"><h3 class="mb-1 text-center" id="customer_number"></h3></a>
                                 </div>
                                 <div class="col text-center">
                                     <a href="{{route('customers.create')}}" class="btn btn-sm btn-secondary">Create New Customer</a>
@@ -43,7 +43,7 @@
                             <div class="col-12 col-xl-7 px-xl-0">
                                 <div class="d-none d-sm-block">
                                     <h2 class="h5 text-center">Number of Tellers</h2>
-                                    <h3 class="mb-1 text-center" id="teller_number"></h3>
+                                    <a href="{{route('tellers.index')}}"><h3 class="mb-1 text-center" id="teller_number"></h3></a>
                                 </div>
                                 <div class="col text-center">
                                     <a href="{{route('tellers.create')}}" class="btn btn-sm btn-secondary">Create New Teller</a>
@@ -63,7 +63,7 @@
                             <div class="col-12 col-xl-7 px-xl-0">
                                 <div class="d-none d-sm-block">
                                     <h2 class="h5 text-center">Number of Users</h2>
-                                    <h3 class="mb-1 text-center" id="users_number"></h3>
+                                    <a href="{{route('users.index')}}"><h3 class="mb-1 text-center" id="users_number"></h3></a>
                                 </div>
                                 <div class="col text-center">
                                     <a href="{{route('users.create')}}" class="btn btn-sm btn-secondary">Create New User</a>
@@ -75,7 +75,7 @@
             </div>
             <input hidden type="number" id="customer_number_value" name="customer_number_value" value="{{$customers}}">
             <input hidden type="number" id="teller_number_value" name="teller_number_value" value="{{$tellers}}">
-            <input hidden type="number" id="users_number_value" name="users_number_value" value="{{$userss}}">
+            <input hidden type="number" id="users_number_value" name="users_number_value" value="{{$number_of_users}}">
         </div>
     <div class="row">
         <div class="col">
@@ -85,11 +85,26 @@
             <div id="second"></div>
         </div>
     </div>
+        <div class="mt-4 row">
+            <div class="col">
+                <div  id="third"></div>
+            </div>
+            <div class="col">
+                <div id="fourth"></div>
+            </div>
+        </div>
+        <div class="mt-4 row">
+            <div class="col">
+                <div  id="fifth"></div>
+            </div>
+            <div class="col">
+                <div id="sixth"></div>
+            </div>
+        </div>
 
     @endsection
 
 @section('scripts')
-        <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -103,7 +118,7 @@
         <script type="text/javascript">
 
 
-            var items = <?php echo json_encode($items)?>;
+            var items = <?php echo json_encode($users)?>;
 
             Highcharts.chart('first', {
 
@@ -119,9 +134,7 @@
                     text: 'Number of new registered users'
                 },
                 xAxis: {
-                    categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                        'October', 'November', 'December'
-                    ]
+                    categories: <?php echo json_encode($first_c)?>
                 },
                 yAxis: {
                     title: {
@@ -140,7 +153,7 @@
                 },
                 series: [{
                     name: 'New Users',
-                    data: items
+                    data: <?php echo json_encode($first_v)?>
                 }],
                 responsive: {
                     rules: [{
@@ -157,6 +170,9 @@
                     }]
                 }
             });
+
+            var points = <?php echo json_encode($rd_values)?>;
+
             Highcharts.chart('second', {
 
                 chart:{
@@ -165,19 +181,17 @@
                     type: 'line'
                 },
                 title: {
-                    text: 'New Users'
+                    text: 'Gift Value Redeemed'
                 },
                 subtitle: {
-                    text: 'Number of new registered users'
+                    text: 'The amount of gifts redeemed by customers'
                 },
                 xAxis: {
-                    categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                        'October', 'November', 'December'
-                    ]
+                    categories: <?php echo json_encode($second_c)?>
                 },
                 yAxis: {
                     title: {
-                        text: 'Number of New Users'
+                        text: 'Gift Value Redeemed'
                     }
                 },
                 legend: {
@@ -190,9 +204,10 @@
                         allowPointSelect: true
                     }
                 },
+
                 series: [{
-                    name: 'New Users',
-                    data: items
+                    name: 'Gift Value',
+                    data: <?php echo json_encode($second_v)?>
                 }],
                 responsive: {
                     rules: [{
@@ -210,6 +225,233 @@
                 }
             });
 
+            var spending_amount = <?php echo json_encode($spending_amount)?>;
+
+            Highcharts.chart('third', {
+
+                chart:{
+                    height: 400,
+                    width:500,
+                    type: 'line'
+                },
+                title: {
+                    text: 'Spending Amount'
+                },
+                subtitle: {
+                    text: 'The amount of Spending done by customers'
+                },
+                xAxis: {
+                    categories: <?php echo json_encode($third_c)?>
+                },
+                yAxis: {
+                    title: {
+                        text: 'Spending Amount'
+                    },
+                    labels: {
+                        formatter: function(){
+                            return this.value/1000000 + "M";
+                        },
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true
+                    }
+                },
+                series: [{
+                    name: 'Spending Amount',
+                    data: <?php echo json_encode($third_v)?>
+                }],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                verticalAlign: 'bottom',
+                                align: 'center'
+                            }
+                        }
+                    }]
+                }
+            });
+
+            var transactions_made = <?php echo json_encode($transactions_made)?>;
+
+            Highcharts.chart('fourth', {
+
+                chart:{
+                    height: 400,
+                    width:500,
+                    type: 'column'
+                },
+                title: {
+                    text: 'Transactions Made'
+                },
+                subtitle: {
+                    text: 'The number of transactions made'
+                },
+                xAxis: {
+                    categories: <?php echo json_encode($fourth_c)?>
+                },
+                yAxis: {
+                    title: {
+                        text: 'Transactions made'
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true
+                    }
+                },
+                series: [{
+                    name: 'Transactions made',
+                    data: <?php echo json_encode($fourth_v)?>
+                }],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                verticalAlign: 'bottom',
+                                align: 'center'
+                            }
+                        }
+                    }]
+                }
+            });
+
+            var teller_transactions_made = <?php echo json_encode($teller_transactions_made)?>;
+
+            Highcharts.chart('fifth', {
+
+                chart:{
+                    height: 400,
+                    width:500,
+                    type: 'column'
+                },
+                title: {
+                    text: 'Tellers Transactions'
+                },
+                subtitle: {
+                    text: 'The number of transactions made by each teller'
+                },
+                xAxis: {
+                    categories: <?php echo json_encode($fifth_c)?>
+                },
+                yAxis: {
+                    title: {
+                        text: 'Transactions made'
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true
+                    }
+                },
+                series: [{
+                    name: 'Transactions made',
+                    data: <?php echo json_encode($fifth_v)?>
+                }],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                verticalAlign: 'bottom',
+                                align: 'center'
+                            }
+                        }
+                    }]
+                }
+            });
+
+            var teller_amount_received = <?php echo json_encode($teller_amount_received)?>;
+
+            Highcharts.chart('sixth', {
+
+                chart:{
+                    height: 400,
+                    width:500,
+                    type: 'line'
+                },
+                title: {
+                    text: 'Tellers Amount Received'
+                },
+                subtitle: {
+                    text: 'The amount of money received by each teller'
+                },
+                xAxis: {
+                    categories: <?php echo json_encode($sixth_c)?>
+                },
+                yAxis: {
+                    title: {
+                        text: 'Amount Received'
+                    },
+                    labels: {
+                        formatter: function(){
+                            return this.value/1000000 + "M";
+                        },
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true
+                    }
+                },
+                series: [{
+                    name: 'Amount Received',
+                    data: <?php echo json_encode($sixth_v)?>
+                }],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                verticalAlign: 'bottom',
+                                align: 'center'
+                            }
+                        }
+                    }]
+                }
+            });
         </script>
 
         <script>

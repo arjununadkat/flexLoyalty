@@ -100,9 +100,11 @@ class TransactionController extends Controller
                 $transaction->save();
                 $user->points += (request('points') - request('redeemable_points'));
                 $user->gift_value += (request('gift_value') - str_replace(',', '', request('redeemable_gift_value')));
+                $user->points_redeemed += request('redeemable_points');
+                $user->gift_value_redeemed += str_replace(',', '', request('redeemable_gift_value'));
                 $user->save();
-                $teller->points_redeemed += request('redeemable_points');
-                $teller->gift_value_redeemed += str_replace(',', '', request('redeemable_gift_value'));
+                $teller->discounted_points += request('redeemable_points');
+                $teller->discounted_gift_value += str_replace(',', '', request('redeemable_gift_value'));
                 $teller->save();
             }
             else{

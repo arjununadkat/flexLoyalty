@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use function Zend\Diactoros\normalizeUploadedFiles;
 
 class LoginController extends Controller
 {
@@ -41,8 +43,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
     public function authenticated(Request $request, $user)
     {
+
         $users = User::all();
         foreach ($users as $user){
             if (Carbon::now()->gt($user->reset_at)){
@@ -52,5 +56,14 @@ class LoginController extends Controller
                 $user->save();
             }
         }
+        $project = Project::get();
+
+
+        if ($project->isEmpty()){
+            return redirect()->route('project.index');
+        }
+        else if (!$project->isEmpty())
+        return redirect()->route('dashboard.index');
+
     }
 }

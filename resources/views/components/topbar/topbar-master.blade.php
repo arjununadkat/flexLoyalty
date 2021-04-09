@@ -22,14 +22,14 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-0">
-                        <a class="dropdown-item rounded-top fw-bold" href="{{route('user.profile.show', auth()->user())}}"><span class="far fa-user-circle"></span>My Profile</a>
+                        <a class="dropdown-item rounded-top fw-bold" href="{{route('user.profile.show', base64_encode(auth()->user()->id))}}"><span class="far fa-user-circle"></span>My Profile</a>
                         @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
                         <a class="dropdown-item fw-bold" href="{{route('project.index')}}"><span class="fas fa-cog"></span>Project Settings</a>
                         @endif
                         <div role="separator" class="dropdown-divider my-0"></div>
                         <button type="button" id="logoutbutton" class="btn btn-danger delete"
                                 data-toggle="modal"
-                                data-target="#deletemodal">Logout</button>
+                                data-target="#logoutModal">Logout</button>
 {{--                        <a class="dropdown-item rounded-bottom fw-bold" href="/logout" ><span class="fas fa-sign-out-alt text-danger" data-toggle="modal" data-target="#deletemodal"></span>Logout</a>--}}
                     </div>
                 </li>
@@ -37,18 +37,18 @@
         </div>
     </div>
 </nav>
-<x-modal.Dmodal-master>
-    @section('Dheader')
+<x-modal.logoutModal-master>
+    @section('Lheader')
         You are about to logout of the system
     @endsection
-    @section('Dparagraph')
+    @section('Lparagraph')
         Are you sure you want to Log out?
     @endsection
-    @section('Daction')
+    @section('Laction')
             action="{{route('logout')}}"
     @endsection
-    @section('Dinput')
+    @section('Linput')
 
     @endsection
 
-</x-modal.Dmodal-master>
+</x-modal.logoutModal-master>

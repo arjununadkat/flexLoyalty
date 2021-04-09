@@ -19,8 +19,8 @@
                                 <th class="border-0">Last Name</th>
                                 <th class="border-0">Transactions Made</th>
                                 <th class="border-0">Received Amount</th>
-                                <th class="border-0">Points Redeemed</th>
-                                <th class="border-0">Gift Value Redeemed</th>
+                                <th class="border-0">Discounted Points</th>
+                                <th class="border-0">Discounted Gift Value</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -45,8 +45,8 @@
                                 </td>
 {{--                                <td class="border-0 fw-bold">{{$user->transactions_made}}</td>--}}
                                 <td class="border-0 fw-bold">{{$user->received_amount}}</td>
-                                <td class="border-0 fw-bold">{{$user->points_redeemed}}</td>
-                                <td class="border-0 fw-bold">{{$user->gift_value_redeemed}}</td>
+                                <td class="border-0 fw-bold">{{$user->discounted_points}}</td>
+                                <td class="border-0 fw-bold">{{$user->discounted_gift_value}}</td>
                             </tr>
                             @endforeach
                             <!-- End of Item -->

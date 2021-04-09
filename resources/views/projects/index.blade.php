@@ -67,7 +67,7 @@
 
             </form>
             <div class="mt-4">
-                <a href="/projects"><button id="redeem" class="btn btn-tertiary btn-lg">View previous projects</button></a>
+                <a href={{route('projects.show')}}><button id="redeem" class="btn btn-tertiary btn-lg">View previous projects</button></a>
             </div>
 
             <button hidden id="showmd" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-achievement">show</button>

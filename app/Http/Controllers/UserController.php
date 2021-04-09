@@ -34,6 +34,8 @@ class UserController extends Controller
             'roles'=>Role::all(),
         ]);
     }
+
+
     public function userIndex(){
 
         if(Gate::denies('isAdmin')){
