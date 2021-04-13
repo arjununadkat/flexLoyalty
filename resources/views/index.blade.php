@@ -12,7 +12,6 @@
 @endsection
 @section('content')
         <div class="row">
-
             <div class="col-12 col-sm-6 col-xl-4 mt-4 mb-4">
                 <div class="card border-light shadow-sm">
                     <div class="card-body">
@@ -77,6 +76,72 @@
             <input hidden type="number" id="teller_number_value" name="teller_number_value" value="{{$tellers}}">
             <input hidden type="number" id="users_number_value" name="users_number_value" value="{{$number_of_users}}">
         </div>
+        <div class="row">
+            <div class="col-12 col-sm-6 col-xl-4 mt-4 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon icon-shape icon-md icon-shape-primary rounded me-4 me-sm-0"><span class="fas fa-money-bill-wave"></span></div>
+                            </div>
+                            <div class="col-12 col-xl-7 px-xl-0">
+                                <div class="d-none d-sm-block">
+                                    <h2 class="h5 text-center">Number of Transactions</h2>
+                                    <a href="{{route('transactions.index')}}"><h3 class="mb-1 text-center" id="transactions_number"></h3></a>
+                                </div>
+                                <div class="col text-center">
+                                    <a href="{{route('transactions.create')}}" class="btn btn-sm btn-secondary">Create New Transaction</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4 mt-4 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon icon-shape icon-md icon-shape-primary rounded me-4 me-sm-0"><span class="fas fa-users"></span></div>
+                            </div>
+                            <div class="col-12 col-xl-7 px-xl-0">
+                                <div class="d-none d-sm-block">
+                                    <h2 class="h5 text-center">Customer</h2>
+                                    <h2 class="h5 text-center">Quick Check</h2>
+{{--                                    <h5 class="mt-4 text-center"></h5>--}}
+                                </div>
+                                <div class="col text-center">
+                                    <a href="{{route('customer.show')}}" class="mt-3 btn btn-sm btn-secondary"><h4>Click Here</h4></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-4 mt-4 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <div class="row d-block d-xl-flex align-items-center">
+                            <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                <div class="icon icon-shape icon-md icon-shape-primary rounded me-4 me-sm-0"><span class="fas fa-tasks"></span></div>
+                            </div>
+                            <div class="col-12 col-xl-7 px-xl-0">
+                                <div class="d-none d-sm-block">
+                                    <h2 class="h5 text-center">Project Running Days</h2>
+                                    <a href="{{route('project.show')}}"><h3 class="mb-1 text-center" id="project_days"></h3></a>
+                                </div>
+                                <div class="col text-center">
+                                    <a href="{{route('projects.show')}}" class="btn btn-sm btn-secondary">View Projects</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input hidden type="number" id="transactions_number_value" name="transactions_number_value" value="{{$number_of_transactions}}">
+            <input hidden type="number" id="project_days_value" name="project_days_value" value="{{$diff}}">
+{{--            <input hidden type="number" id="users_number_value" name="users_number_value" value="{{$number_of_users}}">--}}
+        </div>
     <div class="row">
         <div class="col">
         <div  id="first"></div>
@@ -114,6 +179,8 @@
             document.getElementById('customer_number').innerHTML = document.getElementById('customer_number_value').value ;
             document.getElementById('teller_number').innerHTML = document.getElementById('teller_number_value').value;
             document.getElementById('users_number').innerHTML = document.getElementById('users_number_value').value;
+            document.getElementById('transactions_number').innerHTML = document.getElementById('transactions_number_value').value;
+            document.getElementById('project_days').innerHTML = document.getElementById('project_days_value').value;
         </script>
         <script type="text/javascript">
 
@@ -192,7 +259,15 @@
                 yAxis: {
                     title: {
                         text: 'Gift Value Redeemed'
-                    }
+                    },
+                    labels: {
+                        formatter: function(){
+                            return this.value/1000000 + "M";
+                        },
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
                 },
                 legend: {
                     layout: 'vertical',

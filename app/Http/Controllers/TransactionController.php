@@ -69,6 +69,7 @@ class TransactionController extends Controller
         $redeemable_gift_value = str_replace(',', '', request('redeemable_gift_value'));
         $redeemable_points = intval(request('redeemable_points'));
 
+
         $user = User::find(request('customer'));
         $teller = User::find(request('teller_id'));
         $userpoints = $user->points;

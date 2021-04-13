@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -158,7 +159,18 @@ class Chart extends Controller
         $tellers = $user2->count();
         $user3 = User::all();
 
+        $project = Project::latest()->first();
+//        dd($project);
+        $project_days = $project->created_at;
+        $now = Carbon::now();
+        $diff = $project_days->diffInDays($now);
+//        dd($project_days);
+
+
         $number_of_users = $user3->count();
+
+        $trans = Transaction::all();
+        $number_of_transactions = $trans->count();
 //dd(json_decode($users));
         return view('index', compact('users',
             'first_c','first_v',
@@ -174,6 +186,8 @@ class Chart extends Controller
             ->with('spending_amount', $spending_amounts)
             ->with('transactions_made', $transactions_made)
             ->with('teller_transactions_made', $teller_transactions_made)
+            ->with('number_of_transactions', $number_of_transactions)
+            ->with('diff', $diff)
             ->with('teller_amount_received', $teller_received_amount);
     }
 

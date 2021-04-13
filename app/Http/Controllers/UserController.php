@@ -202,6 +202,12 @@ class UserController extends Controller
         }
     }
 
+    public function customerShow(){
+
+            return view('customers.show');
+
+    }
+
     public function customerStore(){
 
         if(Gate::denies('isAdmin')){
