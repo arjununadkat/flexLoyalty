@@ -128,10 +128,10 @@
                             <div class="col-12 col-xl-7 px-xl-0">
                                 <div class="d-none d-sm-block">
                                     <h2 class="h5 text-center">Project Running Days</h2>
-                                    <a href="{{route('project.show')}}"><h3 class="mb-1 text-center" id="project_days"></h3></a>
+                                    <a href="{{route('projects.show')}}"><h3 class="mb-3 mt-3 text-center" id="project_days"></h3></a>
                                 </div>
                                 <div class="col text-center">
-                                    <a href="{{route('projects.show')}}" class="btn btn-sm btn-secondary">View Projects</a>
+                                    <a href="{{route('projects.show')}}" class="mt-1 btn btn-sm btn-secondary">View Projects</a>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,6 @@
             </div>
             <input hidden type="number" id="transactions_number_value" name="transactions_number_value" value="{{$number_of_transactions}}">
             <input hidden type="number" id="project_days_value" name="project_days_value" value="{{$diff}}">
-{{--            <input hidden type="number" id="users_number_value" name="users_number_value" value="{{$number_of_users}}">--}}
         </div>
     <div class="row">
         <div class="col">
