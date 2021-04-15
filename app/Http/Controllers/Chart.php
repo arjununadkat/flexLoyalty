@@ -47,7 +47,7 @@ class Chart extends Controller
             //x-axis
             array_push($first_c,$user->month,);
             //y-axis
-            array_push($first_v,array($index,$user->users));
+            array_push($first_v,array($index,(0 +$user->users)));
         }
 //        dd($first_v);
 
@@ -68,7 +68,8 @@ class Chart extends Controller
             array_push($second_c,$rd_value->month,);
             //y-axis
 //            array_push($second_v,$rd_value->value);
-            $second_v[$index] = 0+$rd_value->value;
+            array_push($second_v,array($index,(0 +$rd_value->value)));
+//            $second_v[$index] = 0+$rd_value->value;
         }
 
 //        dd($second_v);
@@ -105,7 +106,7 @@ class Chart extends Controller
             //x-axis
             array_push($fourth_c,$t_made->month,);
             //y-axis
-            array_push($fourth_v,array($index,$t_made->transactions_count));
+            array_push($fourth_v,array($index,(0+$t_made->transactions_count)));
         }
 //        dd($fourth_c);
 
@@ -121,7 +122,7 @@ class Chart extends Controller
             //x-axis
             array_push($fifth_c,$value->user['firstname'],);
             //y-axis
-            array_push($fifth_v,array($index,$value->transactions_count));
+            array_push($fifth_v,array($index,(0 + $value->transactions_count)));
         }
 
 
