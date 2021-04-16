@@ -26,6 +26,7 @@
                         @if(\Illuminate\Support\Facades\Gate::allows('isAdmin'))
                         <a class="dropdown-item fw-bold" href="{{route('project.index')}}"><span class="fas fa-cog"></span>Project Settings</a>
                         @endif
+                        <a class="dropdown-item rounded-top fw-bold" href="{{route('user.password.change', base64_encode(auth()->user()->id))}}"><span class="fas fa-lock"></span>Change My Password</a>
                         <div role="separator" class="dropdown-divider my-0"></div>
                         <button type="button" id="logoutbutton" class="btn btn-danger delete"
                                 data-toggle="modal"

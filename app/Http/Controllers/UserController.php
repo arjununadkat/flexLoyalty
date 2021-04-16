@@ -34,6 +34,40 @@ class UserController extends Controller
             'roles'=>Role::all(),
         ]);
     }
+    public function password($user){
+
+        $id = base64_decode($user);
+        $user_data = User::find($id);
+
+        return view('users.password', [
+            'user'=>$user_data,
+        ]);
+    }
+
+    public function passwordChange(User $user){
+        $inputs = request()->validate([
+
+            'password'=> ['confirmed'],
+
+        ]);
+
+
+        $user->password = Hash::make($inputs['password']);
+
+
+        if ($user->isDirty('password')
+        ) {
+            $user->update();
+            Session::flash('password_changed', 'User was successfully updated!');
+            return back();
+        }
+        if ($user->isClean('password')
+        ) {
+            session()->flash('updated_not', 'No changes made!');
+            return back();
+        }
+
+    }
 
 
     public function userIndex(){

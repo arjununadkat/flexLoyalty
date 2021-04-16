@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function (){
     Route::get('/projects', [ProjectController::class, 'show'])->name('projects.show');
 
     Route::get('/user/{user}/profile', [UserController::class, 'show'])->name('user.profile.show');
+    Route::get('/user/{user}/password', [UserController::class, 'password'])->name('user.password.change');
+    Route::put('/user/{user}/password/update', [UserController::class, 'passwordChange'])->name('user.password.update');
     Route::put('/user/{user}/update', [UserController::class, 'update'])->name('user.profile.update');
     Route::put('/users/{user}/attach',[UserController::class, 'attach'])->name('user.role.attach');
     Route::put('/users/{user}/detach',[UserController::class, 'detach'])->name('user.role.detach');
