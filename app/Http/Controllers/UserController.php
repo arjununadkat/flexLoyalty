@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Nexmo\Laravel\Facade\Nexmo;
 use PhpParser\Node\Expr\Cast\Int_;
 use Illuminate\Support\Facades\Gate;
+use App\Rules\MatchOldPassword;
 
 class UserController extends Controller
 {
@@ -47,7 +48,8 @@ class UserController extends Controller
     public function passwordChange(User $user){
         $inputs = request()->validate([
 
-            'password'=> ['confirmed'],
+            'oldPassword'=>['required', new MatchOldPassword],
+            'password'=> ['confirmed', 'different:oldPassword'],
 
         ]);
 

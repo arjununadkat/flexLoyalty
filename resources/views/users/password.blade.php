@@ -17,6 +17,18 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
+                        <label for="oldPassword">Old Password</label>
+                        <input type="password"
+                               class="form-control @error('oldPassword') is-invalid @enderror"
+                               name="oldPassword"
+                               id="oldPassword"
+                               required>
+                        <small id="oldPasswordHelp" class="form-text text-muted">Please input your current password</small>
+                        @error('oldPassword')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="password">New Password</label>
                         <input type="password"
                                class="form-control @error('password') is-invalid @enderror"
